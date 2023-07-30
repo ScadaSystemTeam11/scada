@@ -8,8 +8,8 @@ public class DigitalInput : Tag
     public string Driver { get; set; }
 
 
-    public DigitalInput(int id, string tagName, string description,  float scanTime, bool onOffScan, string driver, float currentValue)
-        :base(id, tagName, description, currentValue)
+    public DigitalInput( string tagName, string description,  float scanTime, bool onOffScan, string driver, float currentValue)
+        :base(tagName, description, currentValue)
     {
         ScanTime = scanTime;
         OnOffScan = onOffScan;

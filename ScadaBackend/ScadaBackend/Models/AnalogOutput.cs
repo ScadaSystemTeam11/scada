@@ -7,8 +7,8 @@ public class AnalogOutput : Tag
     public float HighLimit { get; set; }
     public string Units { get; set; }
 
-    public AnalogOutput(int id, string tagName, string description,  float initialValue, float currentValue, float lowLimit, float highLimit, string units)
-        :base(id, tagName, description, currentValue)
+    public AnalogOutput(string tagName, string description,  float initialValue, float currentValue, float lowLimit, float highLimit, string units)
+        :base( tagName, description, currentValue)
     {
         InitialValue = initialValue;
         LowLimit = lowLimit;
