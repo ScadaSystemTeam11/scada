@@ -8,7 +8,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13f82bf1-0b38-4ab7-b917-399c4a27e848" name="Changes" comment="" />
+    <list default="true" id="13f82bf1-0b38-4ab7-b917-399c4a27e848" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ScadaBackend/Models/Tag.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScadaBackend/Models/ErrorViewModel.cs" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,7 +84,7 @@
       <option name="presentableId" value="Default" />
       <updated>1690657765073</updated>
       <workItem from="1690657766407" duration="4403000" />
-      <workItem from="1690723034751" duration="820000" />
+      <workItem from="1690723034751" duration="1145000" />
     </task>
     <servers />
   </component>
