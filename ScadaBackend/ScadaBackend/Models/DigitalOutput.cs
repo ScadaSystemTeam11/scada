@@ -9,6 +9,8 @@ public class DigitalOutput : Tag
     {
         InitialValue = initialValue;
     }
+    
+    
 
 
 
