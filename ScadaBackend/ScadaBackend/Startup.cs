@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ScadaBackend.Data;
 using Microsoft.Extensions.Configuration;
+using ScadaBackend.Interfaces;
+using ScadaBackend.Repository;
 using AppContext = ScadaBackend.Data.AppContext;
 
 namespace ScadaBackend;
@@ -26,7 +28,6 @@ public class Startup
 
         IConfiguration configuration = configBuilder.Build();
 
-        // Učitajte vrednosti iz konfiguracije
         string username = configuration["DbSettings:DB_USERNAME"];
         string password = configuration["DbSettings:DB_PASSWORD"];
 
@@ -36,6 +37,8 @@ public class Startup
         
         services.AddDbContext<AppContext>(options =>
             options.UseNpgsql(connectionString));
+
+        services.AddScoped<IUserRepository, UserRepository>();
 
         services.AddControllersWithViews();
         services.AddDatabaseDeveloperPageExceptionFilter();
