@@ -10,13 +10,7 @@
   <component name="ChangeListManager">
     <list default="true" id="13f82bf1-0b38-4ab7-b917-399c4a27e848" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ScadaBackend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ScadaBackend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScadaBackend/Models/Alarm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScadaBackend/Models/Alarm.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScadaBackend/Models/AnalogInput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScadaBackend/Models/AnalogInput.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScadaBackend/Models/AnalogOutput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScadaBackend/Models/AnalogOutput.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScadaBackend/Models/DigitalInput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScadaBackend/Models/DigitalInput.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScadaBackend/Models/DigitalOutput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScadaBackend/Models/DigitalOutput.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScadaBackend/Models/Tag.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScadaBackend/Models/Tag.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScadaBackend/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScadaBackend/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScadaBackend/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ScadaBackend/Properties/launchSettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ScadaBackend/ScadaBackend.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ScadaBackend/ScadaBackend.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ScadaBackend/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ScadaBackend/appsettings.json" afterDir="false" />
     </list>
@@ -39,31 +33,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlserver",
-      "sqlserver.localdb"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlserver&quot;,
+      &quot;sqlserver.localdb&quot;
     ],
-    "rider.external.source.directories": [
-      "/Users/veljkobubnjevic/Library/Application Support/JetBrains/Rider2023.1/resharper-host/DecompilerCache",
-      "/Users/veljkobubnjevic/Library/Application Support/JetBrains/Rider2023.1/resharper-host/SourcesCache",
-      "/Users/veljkobubnjevic/.local/share/Symbols/src"
+    &quot;rider.external.source.directories&quot;: [
+      &quot;/Users/veljkobubnjevic/Library/Application Support/JetBrains/Rider2023.1/resharper-host/DecompilerCache&quot;,
+      &quot;/Users/veljkobubnjevic/Library/Application Support/JetBrains/Rider2023.1/resharper-host/SourcesCache&quot;,
+      &quot;/Users/veljkobubnjevic/.local/share/Symbols/src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ScadaBackend: http">
     <configuration name="ScadaBackend: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ScadaBackend/ScadaBackend.csproj" />
@@ -109,6 +103,7 @@
       <workItem from="1690727397519" duration="73000" />
       <workItem from="1690727526422" duration="2804000" />
       <workItem from="1690744528364" duration="10472000" />
+      <workItem from="1691236104430" duration="172000" />
     </task>
     <servers />
   </component>

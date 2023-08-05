@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ScadaBackend.Data;
+using Microsoft.Extensions.Configuration;
 using AppContext = ScadaBackend.Data.AppContext;
 
 namespace ScadaBackend;
@@ -20,8 +21,14 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        string username = Environment.GetEnvironmentVariable("DB_USERNAME");
-        string password = Environment.GetEnvironmentVariable("DB_PASSWORD");
+     var configBuilder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appConfig.json", optional: false, reloadOnChange: true);
+
+        IConfiguration configuration = configBuilder.Build();
+
+        // Učitajte vrednosti iz konfiguracije
+        string username = configuration["DbSettings:DB_USERNAME"];
+        string password = configuration["DbSettings:DB_PASSWORD"];
 
         string connectionString = Configuration.GetConnectionString("DefaultConnection")
             .Replace("{username}", username)
