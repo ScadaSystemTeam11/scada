@@ -13,9 +13,11 @@ public class AppContext : DbContext
     public DbSet<AnalogOutput> AnalogOutputs { get; set; }
     public DbSet<AnalogInput> AnalogInputs { get; set; }
     public DbSet<Alarm>  Alarms { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>().ToTable("User");
         modelBuilder.Entity<DigitalOutput>().ToTable("DigitalOutput");
         modelBuilder.Entity<AnalogOutput>().ToTable("AnalogOutput");
         modelBuilder.Entity<DigitalInput>().ToTable("DigitalInput");
