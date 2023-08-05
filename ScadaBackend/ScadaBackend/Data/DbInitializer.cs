@@ -9,6 +9,11 @@ public static class DbInitializer
         context.Database.EnsureDeleted(); // Ovo će obrisati celu bazu ako postoji.
         context.Database.EnsureCreated();
 
+        if (!context.Users.Any())
+        {
+            AddUsers(context);
+        }
+        
         if (!context.DigitalInputs.Any())
         {
             AddDigitalInputs(context);
@@ -26,6 +31,18 @@ public static class DbInitializer
             AddAnalogOutputs(context);
         }
      
+    }
+
+    private static void AddUsers(AppContext context)
+    {
+        var users = new User[]
+        {
+            new("veljkob", "veljko123", "ADMIN")
+        };
+        foreach (User u in users)
+        {
+            context.Users.Add(u);
+        }
     }
     
     private static void AddAnalogOutputs(AppContext context)
