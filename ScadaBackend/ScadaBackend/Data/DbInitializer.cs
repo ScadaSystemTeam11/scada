@@ -50,9 +50,9 @@ public static class DbInitializer
         var analogOutputs = new AnalogOutput[]
         {
           new ("Kontrola rezervoara 1", "Distribucija cokoladnog mleka",
-              10, 18, 3, 50, "L" ),
+              10, 18, 5, 150, "L" ),
           new ("Kontrola rezervoara 3", "Distribucija sojinog mleka",
-              10, 30, 3, 50, "L" )
+              10, 30, 5, 150, "L" )
         };
 
         foreach (AnalogOutput d in analogOutputs)
@@ -67,9 +67,9 @@ public static class DbInitializer
         var analogInputs = new AnalogInput[]
         {
            new ("Rezervoar 1", "Rezervoar za cokoladno mleko", 18, 3,
-               true, new List<Alarm>(), 3, 50, "L", "Driver1"),
+               true, new List<Alarm>(), 5, 150, "L", "Driver1"),
            new ("Rezervoar 3", "Rezervoar za sojino mleko", 30, 3,
-               true, new List<Alarm>(), 3, 50, "L", "Driver1")
+               true, new List<Alarm>(), 5, 150, "L", "Driver1")
 
         };
 
