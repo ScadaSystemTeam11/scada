@@ -14,6 +14,16 @@ public class TagService : ITagService  {
         _tagRepository = tagRepository;
     }
     
+    public async Task<List<DigitalInput>> GetDigitalInputTags()
+    {
+
+        return await _tagRepository.GetDigitalInputTags();
+    }
+
+    public async Task<List<AnalogInput>> GetAnalogInputTags()
+    {
+        return await _tagRepository.GetAnalogInputTags();
+    }
     public async Task StartSimulationAsync()
     {
         var analogInputs = await _tagRepository.GetAnalogInputTags();
@@ -83,6 +93,20 @@ public class TagService : ITagService  {
             else continue;
             await Task.Delay(TimeSpan.FromSeconds(analogInput.ScanTime));
 
+        }
+    }
+
+    public async Task<bool> SetScan(int id, string type, bool isOn)
+    {
+        if (type == "digital")
+        {
+            DigitalInput  di = await this._tagRepository.GetDigitalInputById(id);
+            return await this._tagRepository.SetScanForDigitalInput(di, isOn);
+        }
+        else
+        {
+            AnalogInput ai = await this._tagRepository.GetAnalogInputById(id);
+            return await this._tagRepository.SetScanForAnalogInput(ai, isOn);
         }
     }
     
