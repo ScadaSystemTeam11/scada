@@ -44,7 +44,7 @@ namespace ScadaBackend.Controllers
             }
         }
         
-        [HttpPut("inputScanOnOff")]
+        [HttpPut("InputScanOnOff")]
         public async Task<IActionResult> SetTagScanOnOff(
             [FromBody]InputTagDTO inputTagDto)
         {
