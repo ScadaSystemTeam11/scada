@@ -1,3 +1,4 @@
+using Microsoft.IdentityModel.Tokens;
 using ScadaBackend.Interfaces;
 using ScadaBackend.Models;
 using ScadaBackend.Data;
@@ -20,5 +21,16 @@ public class UserRepository : IUserRepository
     public User? FindUser(string username, string password)
     {
         return _context.Users.Where(x => x.Username == username && x.Password == password).FirstOrDefault();
+    }
+
+    public void AddUser(User user)
+    {
+        _context.Users.Add(user);
+        _context.SaveChanges();
+    }
+
+    public bool DoesUserExist(string username)
+    {
+        return _context.Users.Any(u => u.Username == username);
     }
 }
