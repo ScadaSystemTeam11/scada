@@ -17,6 +17,26 @@ namespace ScadaBackend.Controllers
             _userRepository = userRepository;
             _tagService = tagService;
         }
+        
+        [HttpPost("Register")]
+        public IActionResult Register([FromBody] RegisterUserDTO dto)
+        {
+            
+            if (_userRepository.DoesUserExist(dto.Username))
+            {
+                return Conflict("User with this username already exists.");
+            }
+            User newUser = new User
+            {
+                Username = dto.Username,
+                Password = dto.Password,
+                Role = "STANDARD"
+            };
+
+            _userRepository.AddUser(newUser);
+            UserDTO userDto = new UserDTO(newUser);
+            return Ok(userDto);
+        }
 
         [HttpPost("Login")]
         public IActionResult Login([FromBody] LoginUserDTO dto)
