@@ -7,10 +7,7 @@ public class LoginUserDTO
     public string Username { get; set; }
     public string Password { get; set; }
 
-    public LoginUserDTO()
-    {
-        
-    }
+    public LoginUserDTO() { }
 
     public LoginUserDTO(string username, string password)
     {

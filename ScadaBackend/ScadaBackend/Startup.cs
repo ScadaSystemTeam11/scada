@@ -8,6 +8,7 @@ using ScadaBackend.Data;
 using Microsoft.Extensions.Configuration;
 using ScadaBackend.Interfaces;
 using ScadaBackend.Repository;
+using ScadaBackend.Services;
 using AppContext = ScadaBackend.Data.AppContext;
 
 namespace ScadaBackend;
@@ -35,10 +36,15 @@ public class Startup
             .Replace("{username}", username)
             .Replace("{password}", password);
         
+        
+        
         services.AddDbContext<AppContext>(options =>
-            options.UseNpgsql(connectionString));
+            options.UseNpgsql(connectionString), ServiceLifetime.Singleton);
+
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ITagRepository, TagRepository>();
+        services.AddScoped<ITagService, TagService>();
 
         services.AddControllersWithViews();
         services.AddDatabaseDeveloperPageExceptionFilter();
