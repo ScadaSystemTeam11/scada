@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ScadaBackend.Models;
 
 public class TagChange
 {
+    [Key]
     public int Id { get; set; }
     public int TagId { get; set; }
     public string TagName { get; set; }
