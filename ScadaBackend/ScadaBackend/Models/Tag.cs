@@ -37,5 +37,8 @@ public abstract class Tag
         return randomValue;
     }
 
-
+    public override string ToString()
+    {
+        return $"ID : {ID}\nTagName : {TagName}\nCurrentValue: {CurrentValue}";
+    }
 }
