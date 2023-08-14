@@ -46,6 +46,7 @@ public class Startup
         services.AddScoped<ITagRepository, TagRepository>();
         services.AddScoped<ITagService, TagService>();
 
+        services.AddSignalR();
         services.AddControllersWithViews();
         services.AddDatabaseDeveloperPageExceptionFilter();
 
