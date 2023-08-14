@@ -1,3 +1,5 @@
+using ScadaBackend.DTOs;
+
 namespace ScadaBackend.Models;
 
 public class AnalogInput : Tag
@@ -24,4 +26,16 @@ public class AnalogInput : Tag
     }
 
     public AnalogInput() {}
+
+    public AnalogInput(AnalogInputDTO dto)
+    : base(dto.Name, dto.Description, dto.CurrentValue)
+    {
+        Driver = "Driver";
+        ScanTime = dto.ScanTime;
+        OnOffScan = false;
+        LowLimit = dto.LowLimit;
+        HighLimit = dto.HighLimit;
+        Units = dto.Units;
+        
+    }
 }
