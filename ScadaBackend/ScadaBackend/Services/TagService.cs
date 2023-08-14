@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.SignalR;
 using scada.Services;
 using ScadaBackend.DTOs;
+using ScadaBackend.Hub;
 using ScadaBackend.Interfaces;
 using ScadaBackend.Models;
 using ScadaBackend.Repository;
+using Newtonsoft.Json;
 
 namespace ScadaBackend.Services;
 
@@ -25,7 +28,7 @@ public class TagService : ITagService  {
     {
         return await _tagRepository.GetAnalogInputTags();
     }
-    public async Task StartSimulationAsync()
+    public async Task StartSimulationAsync(IHubContext<TagChangeHub> hubContext)
     {
         var analogInputs = await _tagRepository.GetAnalogInputTags();
         var digitalInputs = await _tagRepository.GetDigitalInputTags();
@@ -34,18 +37,18 @@ public class TagService : ITagService  {
 
         foreach (var digitalInput in digitalInputs)
         {
-            tasks.Add(Task.Run(() => SimulateDigitalInput(digitalInput)));
+            tasks.Add(Task.Run(() => SimulateDigitalInput(digitalInput, hubContext)));
         }
 
         foreach (var analogInput in analogInputs)
         {
-            tasks.Add(Task.Run(() => SimulateAnalogInput(analogInput)));
+            tasks.Add(Task.Run(() => SimulateAnalogInput(analogInput, hubContext)));
         }
 
         await Task.WhenAll(tasks);
     }
     
-    private async Task SimulateDigitalInput(DigitalInput digitalInput)
+    private async Task SimulateDigitalInput(DigitalInput digitalInput,  IHubContext<TagChangeHub> hubContext)
     {
         while (true)
         {
@@ -61,7 +64,9 @@ public class TagService : ITagService  {
                 {
                     TagChange tagChange = new TagChange(digitalInput, value, digitalInput.IOAddress);
                     await _tagRepository.CreateTagChange(tagChange);
-                    
+
+                    string serializedInput = JsonConvert.SerializeObject(digitalInput);
+                    await hubContext.Clients.All.SendAsync("TagValueChanged", serializedInput);
                 }
             } else { continue;}
             
@@ -69,7 +74,7 @@ public class TagService : ITagService  {
         }
     }
 
-    private async Task SimulateAnalogInput(AnalogInput analogInput)
+    private async Task SimulateAnalogInput(AnalogInput analogInput,  IHubContext<TagChangeHub> hubContext)
     {
         while (true)
         {
@@ -89,6 +94,9 @@ public class TagService : ITagService  {
                     TagChange tagChange = new TagChange(analogInput, value, analogInput.IOAddress);
                     await _tagRepository.CreateTagChange(tagChange);
                     
+                    string serializedInput = JsonConvert.SerializeObject(analogInput);
+                    await hubContext.Clients.All.SendAsync("TagValueChanged", serializedInput);
+
                 }
             }
             else continue;
@@ -101,13 +109,13 @@ public class TagService : ITagService  {
     {
         if (type == "digital")
         {
-            DigitalInput  di = await this._tagRepository.GetDigitalInputById(id);
-            return await this._tagRepository.SetScanForDigitalInput(di, isOn);
+            DigitalInput  di = await _tagRepository.GetDigitalInputById(id);
+            return await _tagRepository.SetScanForDigitalInput(di, isOn);
         }
         else
         {
-            AnalogInput ai = await this._tagRepository.GetAnalogInputById(id);
-            return await this._tagRepository.SetScanForAnalogInput(ai, isOn);
+            AnalogInput ai = await _tagRepository.GetAnalogInputById(id);
+            return await _tagRepository.SetScanForAnalogInput(ai, isOn);
         }
     }
 

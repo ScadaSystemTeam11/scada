@@ -1,10 +1,10 @@
 using ScadaBackend;
 using ScadaBackend.Data;
+using ScadaBackend.Hub;
 using AppContext = ScadaBackend.Data.AppContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 var startup = new Startup(builder.Configuration);
 startup.ConfigureServices(builder.Services);
 builder.Services.AddControllersWithViews();
@@ -28,21 +28,29 @@ using (var scope = app.Services.CreateScope())
 
 
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
+app.UseCors(builder =>
+{
+    builder.WithOrigins("http://localhost:4200") //63342  
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+});
+
+
 app.UseCors("AllowOrigins");
-// app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
 app.MapControllers();
+
+app.MapHub<TagChangeHub>("/tagChangeHub");
 
 app.Run();
