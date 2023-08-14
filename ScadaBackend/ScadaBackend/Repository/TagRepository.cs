@@ -101,6 +101,25 @@ public class TagRepository : ITagRepository
         }
     }
 
+    public async Task<AnalogOutputDTO> CreateAnalogOutput(AnalogOutputDTO analogOutputDto)
+    {
+        await DbSemaphore.WaitAsync();
+        try
+        {
+            AnalogOutput analogOutput = new AnalogOutput(analogOutputDto);
+            await _context.AddAsync(analogOutput);
+            await _context.SaveChangesAsync();
+            return analogOutputDto;
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        finally{DbSemaphore.Release();}
+    }
+
     public async Task<AnalogInputDTO> CreateAnalogInput(AnalogInputDTO analogInputDto)
     {
         await DbSemaphore.WaitAsync();

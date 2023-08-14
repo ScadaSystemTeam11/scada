@@ -16,6 +16,7 @@ public interface ITagRepository
     Task<AnalogInput> GetAnalogInputById(int id);
     Task<DigitalInputDTO> CreateDigitalInput(DigitalInputDTO digitalInputDto);
     Task<AnalogInputDTO> CreateAnalogInput(AnalogInputDTO analogInputDto);
+    Task<AnalogOutputDTO> CreateAnalogOutput(AnalogOutputDTO analogOutputDto);
 
 
 }

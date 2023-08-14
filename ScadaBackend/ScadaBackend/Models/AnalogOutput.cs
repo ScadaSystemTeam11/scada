@@ -1,3 +1,5 @@
+using ScadaBackend.DTOs;
+
 namespace ScadaBackend.Models;
 
 public class AnalogOutput : Tag
@@ -14,6 +16,16 @@ public class AnalogOutput : Tag
         LowLimit = lowLimit;
         HighLimit = highLimit;
         Units = units;
+    }
+
+    public AnalogOutput(AnalogOutputDTO dto)
+    : base(dto.Name, dto.Description, dto.InitialValue)
+    {
+        InitialValue = dto.InitialValue;
+        LowLimit = dto.LowLimit;
+        HighLimit = dto.HighLimit;
+        Units = dto.Units;
+        
     }
 
     public AnalogOutput() : base() {}
