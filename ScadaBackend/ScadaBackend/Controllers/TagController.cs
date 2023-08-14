@@ -2,6 +2,7 @@ using System.Buffers.Text;
 using Microsoft.AspNetCore.Mvc;
 using ScadaBackend.DTOs;
 using ScadaBackend.Interfaces;
+using ScadaBackend.Models;
 using ScadaBackend.Repository;
 
 namespace ScadaBackend.Controllers
@@ -13,10 +14,10 @@ namespace ScadaBackend.Controllers
         private readonly ITagService _tagService;
 
         public TagController(ITagService tagService)
-        { 
+        {
             _tagService = tagService;
         }
-        
+
         [HttpPost("CreateDigitalInputTag")]
         public async Task<IActionResult> CreateDigitalInputTag([FromBody] DigitalInputDTO dto)
         {
@@ -24,10 +25,11 @@ namespace ScadaBackend.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (dto.CurrentValue <= 1 && dto.CurrentValue >= 0) 
+
+            if (dto.CurrentValue <= 1 && dto.CurrentValue >= 0)
                 return BadRequest("Invalid tag value");
             if (dto.ScanTime < 0) return BadRequest("Invalid scan time");
-            var tag =await _tagService.CreateDigitalInputTag(dto);
+            var tag = await _tagService.CreateDigitalInputTag(dto);
             return Ok(tag);
         }
 
@@ -39,7 +41,7 @@ namespace ScadaBackend.Controllers
             var tag = await _tagService.CreateDigitalOutputTag(dto);
             return Ok(tag);
         }
-        
+
         [HttpPost("CreateAnalogInputTag")]
         public async Task<IActionResult> CreateAnalogInputTag([FromBody] AnalogInputDTO dto)
         {
@@ -47,14 +49,15 @@ namespace ScadaBackend.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             if (dto.CurrentValue < 0) return BadRequest("Invalid tag value");
             if (dto.ScanTime < 0) return BadRequest("Invalid scan time");
             if (dto.HighLimit <= dto.LowLimit) return BadRequest("Invalid high limit");
             if (dto.LowLimit < 0) return BadRequest("Invalid low limit");
-            var tag =await _tagService.CreateAnalogInputTag(dto);
+            var tag = await _tagService.CreateAnalogInputTag(dto);
             return Ok(tag);
         }
-        
+
         [HttpPost("CreateAnalogOutputTag")]
         public async Task<IActionResult> CreateAnalogOutputTag([FromBody] AnalogOutputDTO dto)
         {
@@ -73,7 +76,7 @@ namespace ScadaBackend.Controllers
             var deleted = _tagService.DeleteDigitalInputTag(id);
             return Ok(deleted);
         }
-        
+
         [HttpDelete("DeleteAnalogInputTag")]
         public async Task<IActionResult> DeleteAnalogInputTag([FromQuery] int id)
         {
@@ -81,7 +84,7 @@ namespace ScadaBackend.Controllers
             var deleted = _tagService.DeleteAnalogInputTag(id);
             return Ok(deleted);
         }
-        
+
         [HttpDelete("DeleteDigitalOutputTag")]
         public async Task<IActionResult> DeleteDigitalOutputTag([FromQuery] int id)
         {
@@ -89,7 +92,7 @@ namespace ScadaBackend.Controllers
             var deleted = _tagService.DeleteDigitalOutputTag(id);
             return Ok(deleted);
         }
-        
+
         [HttpDelete("DeleteAnalogOutputTag")]
         public async Task<IActionResult> DeleteAnalogOutputTag([FromQuery] int id)
         {
@@ -97,8 +100,8 @@ namespace ScadaBackend.Controllers
             var deleted = _tagService.DeleteAnalogOutputTag(id);
             return Ok(deleted);
         }
-        
-        
+
+
         [HttpGet("DigitalInputs")]
         public async Task<IActionResult> GetDigitalInputs()
         {
@@ -112,7 +115,7 @@ namespace ScadaBackend.Controllers
                 return StatusCode(500, "An error occurred while fetching digital inputs.");
             }
         }
-        
+
         [HttpGet("AnalogInputs")]
         public async Task<IActionResult> GetAnalogInputs()
         {
@@ -126,18 +129,59 @@ namespace ScadaBackend.Controllers
                 return StatusCode(500, "An error occurred while fetching analog inputs.");
             }
         }
-        
+
         [HttpPut("InputScanOnOff")]
         public async Task<IActionResult> SetTagScanOnOff(
-            [FromBody]InputTagDTO inputTagDto)
+            [FromBody] InputTagDTO inputTagDto)
         {
-            
-            var setScan =await _tagService.SetScan(inputTagDto.Id,  inputTagDto.Type, inputTagDto.Scan);
+
+            var setScan = await _tagService.SetScan(inputTagDto.Id, inputTagDto.Type, inputTagDto.Scan);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
             return Ok(setScan);
         }
+
+        [HttpPut("UpdateOutputTagValue")]
+        public async Task<IActionResult> UpdateOutputTagValue(
+            [FromBody] OutputTagValueDTO dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            if (dto.Type.ToLower() == "digital")
+            {
+                if (dto.Value < 0 || dto.Value > 1)
+                    return BadRequest("Value must be 0 or 1");
+                var di = await _tagService.GetDigitalOutputById(dto.Id);
+                if (di == null)
+                    return BadRequest("Tag with that Id does not exist");
+                bool updated = await _tagService.UpdateDigitalOutput(di);
+                return Ok(updated);
+            }
+
+            if (dto.Type.ToLower() == "analog")
+            {
+                var analogOutput = await _tagService.GetAnalogOutputById(dto.Id);
+                if (analogOutput == null)
+                 return BadRequest("Tag with that Id does not exist");
+                if (dto.Value > analogOutput.HighLimit)
+                {
+                    return BadRequest("Value of tag is higher than limit");
+                }
+                if (dto.Value < analogOutput.LowLimit)
+                {
+                    return BadRequest("Value of tag is lower than limit");
+                }
+
+                bool updated = await _tagService.UpdateAnalogOutput(analogOutput);
+                return Ok(updated);
+            }
+
+            return BadRequest("Type of tag must be 'digital' or 'analog'");
+
+        }
     }
+
 }

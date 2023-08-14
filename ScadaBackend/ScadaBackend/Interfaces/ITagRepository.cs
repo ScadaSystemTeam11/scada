@@ -7,10 +7,12 @@ public interface ITagRepository
 {
     Task<List<AnalogInput>> GetAnalogInputTags();
     Task<List<DigitalInput>> GetDigitalInputTags();
+    Task<DigitalOutput> GetDigitalOutputById(int id);
+    Task<AnalogOutput> GetAnalogOutputById(int id);
     Task UpdateAnalogInput(AnalogInput analogInput);
-    Task UpdateAnalogOutput(AnalogOutput analogOutput);
+    Task<bool> UpdateAnalogOutput(AnalogOutput analogOutput);
     Task UpdateDigitalInput(DigitalInput digitalInput);
-    Task UpdateDigitalOutput(DigitalOutput digitalOutput);
+    Task<bool> UpdateDigitalOutput(DigitalOutput digitalOutput);
     Task CreateTagChange(TagChange tagChange);
     Task<bool> SetScanForDigitalInput(DigitalInput digitalInput, bool isOn);
     Task<bool> SetScanForAnalogInput(AnalogInput analogInput, bool scan);

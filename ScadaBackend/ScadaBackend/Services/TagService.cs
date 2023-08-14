@@ -111,6 +111,16 @@ public class TagService : ITagService  {
         }
     }
 
+    public async Task<AnalogOutput> GetAnalogOutputById(int id)
+    {
+        return await _tagRepository.GetAnalogOutputById(id);
+    }
+
+    public async Task<DigitalOutput> GetDigitalOutputById(int id)
+    {
+        return await _tagRepository.GetDigitalOutputById(id);
+    }
+
     public async Task<bool> DeleteDigitalInputTag(int id)
     {
         return await _tagRepository.RemoveDigitalInput(id);
@@ -149,5 +159,15 @@ public class TagService : ITagService  {
     public async Task<AnalogOutputDTO> CreateAnalogOutputTag(AnalogOutputDTO dto)
     {
         return await _tagRepository.CreateAnalogOutput(dto);
+    }
+
+    public async Task<bool> UpdateAnalogOutput(AnalogOutput analogOutput)
+    {
+        return await _tagRepository.UpdateAnalogOutput(analogOutput);
+    }
+
+    public async Task<bool> UpdateDigitalOutput(DigitalOutput digitalOutput)
+    {
+        return await _tagRepository.UpdateDigitalOutput(digitalOutput);
     }
 }

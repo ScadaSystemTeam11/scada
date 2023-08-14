@@ -13,6 +13,12 @@ public interface ITagService
      Task<DigitalOutputDTO> CreateDigitalOutputTag(DigitalOutputDTO dto);
      Task<AnalogInputDTO> CreateAnalogInputTag(AnalogInputDTO dto);
      Task<AnalogOutputDTO> CreateAnalogOutputTag(AnalogOutputDTO dto);
+     Task<AnalogOutput> GetAnalogOutputById(int id);
+     Task<DigitalOutput> GetDigitalOutputById(int id);
+     Task<bool> UpdateAnalogOutput(AnalogOutput analogOutput);
+     Task<bool> UpdateDigitalOutput(DigitalOutput digitalOutput);
+
+
      Task<bool> DeleteDigitalInputTag(int id);
      Task<bool> DeleteDigitalOutputTag(int id);
      Task<bool> DeleteAnalogInputTag(int id);

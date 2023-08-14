@@ -202,7 +202,7 @@ public class TagRepository : ITagRepository
         }
     }
 
-    public async Task UpdateAnalogOutput(AnalogOutput analogOutput)
+    public async Task<bool> UpdateAnalogOutput(AnalogOutput analogOutput)
     {
         await DbSemaphore.WaitAsync();
         try
@@ -213,11 +213,15 @@ public class TagRepository : ITagRepository
             {
                 ai.CurrentValue = analogOutput.CurrentValue;
                 await _context.SaveChangesAsync();
+                return true;
             }
+            return false;
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
+            return false;
+
         }
         finally
         {
@@ -225,7 +229,7 @@ public class TagRepository : ITagRepository
         }
     }
 
-    public async Task UpdateDigitalOutput(DigitalOutput digitalOutput)
+    public async Task<bool> UpdateDigitalOutput(DigitalOutput digitalOutput)
     {
         await DbSemaphore.WaitAsync();
         try
@@ -236,11 +240,15 @@ public class TagRepository : ITagRepository
             {
                 ai.CurrentValue = digitalOutput.CurrentValue;
                 await _context.SaveChangesAsync();
+                return true;
             }
+
+            return false;
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
+            return false;
         }
         finally
         {
@@ -355,4 +363,14 @@ public class TagRepository : ITagRepository
             return false;
         }
         finally{DbSemaphore.Release();}    }
+
+    public async Task<DigitalOutput> GetDigitalOutputById(int id)
+    {
+        return await _context.DigitalOutputs.FindAsync(id);
+    }
+
+    public async Task<AnalogOutput> GetAnalogOutputById(int id)
+    {
+        return await _context.AnalogOutputs.FindAsync(id);
+    }
 }
