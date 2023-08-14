@@ -14,4 +14,6 @@ public class DigitalInputDTO
         ScanTime = scanTime;
         CurrentValue = currentValue;
     }
+    
+    public DigitalInputDTO() {}
 }
