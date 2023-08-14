@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using ScadaBackend.DTOs;
+using ScadaBackend.Hub;
 using ScadaBackend.Interfaces;
 using ScadaBackend.Models;
 using ScadaBackend.Services;
@@ -49,7 +51,8 @@ namespace ScadaBackend.Controllers
 
             UserDTO userDto = new UserDTO(user);
 
-            _tagService.StartSimulationAsync();
+            var tagChangeHubContext = HttpContext.RequestServices.GetRequiredService<IHubContext<TagChangeHub>>();
+            _tagService.StartSimulationAsync(tagChangeHubContext);
             return Ok(userDto);
         }
 
