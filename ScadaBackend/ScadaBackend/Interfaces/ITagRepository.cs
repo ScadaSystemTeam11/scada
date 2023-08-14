@@ -7,6 +7,10 @@ public interface ITagRepository
 {
     Task<List<AnalogInput>> GetAnalogInputTags();
     Task<List<DigitalInput>> GetDigitalInputTags();
+    Task<List<DigitalOutput>> GetDigitalOutputs();
+    Task<List<AnalogOutput>> GetAnalogOutputs();
+
+
     Task<DigitalOutput> GetDigitalOutputById(int id);
     Task<AnalogOutput> GetAnalogOutputById(int id);
     Task UpdateAnalogInput(AnalogInput analogInput);

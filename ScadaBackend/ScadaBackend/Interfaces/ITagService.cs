@@ -9,6 +9,10 @@ public interface ITagService
      Task<bool> SetScan(int id, string type, bool isOn);
      Task<List<DigitalInput>> GetDigitalInputTags();
      Task<List<AnalogInput>> GetAnalogInputTags();
+     Task<List<AnalogOutput>> GetAnalogOutputs();
+     Task<List<DigitalOutput>> GetDigitalOutputs();
+
+
      Task<DigitalInputDTO> CreateDigitalInputTag(DigitalInputDTO dto);
      Task<DigitalOutputDTO> CreateDigitalOutputTag(DigitalOutputDTO dto);
      Task<AnalogInputDTO> CreateAnalogInputTag(AnalogInputDTO dto);

@@ -130,6 +130,38 @@ namespace ScadaBackend.Controllers
             }
         }
 
+        [HttpGet("AnalogOutputs")]
+        public async Task<IActionResult> GetAnalogOutputs()
+        {
+            try
+            {
+
+                var analogOutputs = await _tagService.GetAnalogOutputs();
+                return Ok(analogOutputs);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "An error occured while fetching analog outputs");
+            }
+        }
+        
+        [HttpGet("DigitalOutputs")]
+        public async Task<IActionResult> GetDigitalOutputs()
+        {
+            try
+            {
+
+                var di = await _tagService.GetDigitalOutputs();
+                return Ok(di);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "An error occured while fetching digital outputs");
+            }
+        }
+        
+        //TODO:  [HttpGet("AnalogOutputs")]  [HttpGet("DigitalOutputs")]
+
         [HttpPut("InputScanOnOff")]
         public async Task<IActionResult> SetTagScanOnOff(
             [FromBody] InputTagDTO inputTagDto)

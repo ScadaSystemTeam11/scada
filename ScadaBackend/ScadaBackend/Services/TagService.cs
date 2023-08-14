@@ -170,4 +170,14 @@ public class TagService : ITagService  {
     {
         return await _tagRepository.UpdateDigitalOutput(digitalOutput);
     }
+
+    public async Task<List<AnalogOutput>> GetAnalogOutputs()
+    {
+        return await _tagRepository.GetAnalogOutputs();
+    }
+
+    public async Task<List<DigitalOutput>> GetDigitalOutputs()
+    {
+        return await _tagRepository.GetDigitalOutputs();
+    }
 }

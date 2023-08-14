@@ -100,7 +100,26 @@ public class TagRepository : ITagRepository
             DbSemaphore.Release();
         }
     }
-    
+
+    public async Task<List<DigitalOutput>> GetDigitalOutputs()
+    {
+        await DbSemaphore.WaitAsync();
+        try
+        {
+            return await _context.DigitalOutputs.ToListAsync();
+        }
+        finally{DbSemaphore.Release();}
+    }
+
+    public async Task<List<AnalogOutput>> GetAnalogOutputs()
+    {
+        await DbSemaphore.WaitAsync();
+        try
+        {
+            return await _context.AnalogOutputs.ToListAsync();
+        }
+        finally{DbSemaphore.Release();}    }
+
 
     public async Task<DigitalOutputDTO> CreateDigitalOutput(DigitalOutputDTO digitalOutputDto)
     {
@@ -373,4 +392,6 @@ public class TagRepository : ITagRepository
     {
         return await _context.AnalogOutputs.FindAsync(id);
     }
+    
+    
 }
