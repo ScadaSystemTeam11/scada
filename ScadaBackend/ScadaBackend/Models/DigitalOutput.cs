@@ -1,3 +1,5 @@
+using ScadaBackend.DTOs;
+
 namespace ScadaBackend.Models;
 
 public class DigitalOutput : Tag
@@ -8,6 +10,12 @@ public class DigitalOutput : Tag
         :base(tagName, description, currentValue)
     {
         InitialValue = initialValue;
+    }
+
+    public DigitalOutput(DigitalOutputDTO dto)
+    :base(dto.Name, dto.Description, dto.InitialValue)
+    {
+        InitialValue = InitialValue;
     }
 
 }
