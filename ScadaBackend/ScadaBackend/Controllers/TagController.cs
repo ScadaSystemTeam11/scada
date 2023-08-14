@@ -65,6 +65,38 @@ namespace ScadaBackend.Controllers
             var tag = await _tagService.CreateAnalogOutputTag(dto);
             return Ok(tag);
         }
+
+        [HttpDelete("DeleteDigitalInputTag")]
+        public async Task<IActionResult> DeleteDigitalInputTag([FromQuery] int id)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var deleted = _tagService.DeleteDigitalInputTag(id);
+            return Ok(deleted);
+        }
+        
+        [HttpDelete("DeleteAnalogInputTag")]
+        public async Task<IActionResult> DeleteAnalogInputTag([FromQuery] int id)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var deleted = _tagService.DeleteAnalogInputTag(id);
+            return Ok(deleted);
+        }
+        
+        [HttpDelete("DeleteDigitalOutputTag")]
+        public async Task<IActionResult> DeleteDigitalOutputTag([FromQuery] int id)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var deleted = _tagService.DeleteDigitalOutputTag(id);
+            return Ok(deleted);
+        }
+        
+        [HttpDelete("DeleteAnalogOutputTag")]
+        public async Task<IActionResult> DeleteAnalogOutputTag([FromQuery] int id)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var deleted = _tagService.DeleteAnalogOutputTag(id);
+            return Ok(deleted);
+        }
         
         
         [HttpGet("DigitalInputs")]

@@ -111,6 +111,26 @@ public class TagService : ITagService  {
         }
     }
 
+    public async Task<bool> DeleteDigitalInputTag(int id)
+    {
+        return await _tagRepository.RemoveDigitalInput(id);
+    }
+
+    public async Task<bool> DeleteDigitalOutputTag(int id)
+    {
+        return await _tagRepository.RemoveDigitalOutput(id);
+    }
+
+    public async Task<bool> DeleteAnalogInputTag(int id)
+    {
+        return await _tagRepository.RemoveAnalogInput(id);
+    }
+
+    public async Task<bool> DeleteAnalogOutputTag(int id)
+    {
+        return await _tagRepository.RemoveAnalogOutput(id);
+    }
+
     public async Task<DigitalInputDTO> CreateDigitalInputTag(DigitalInputDTO dto)
     {
         return await _tagRepository.CreateDigitalInput(dto);
