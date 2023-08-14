@@ -100,6 +100,7 @@ public class TagRepository : ITagRepository
             DbSemaphore.Release();
         }
     }
+    
 
     public async Task<DigitalOutputDTO> CreateDigitalOutput(DigitalOutputDTO digitalOutputDto)
     {
@@ -239,4 +240,71 @@ public class TagRepository : ITagRepository
             DbSemaphore.Release();
         }
     }
+
+    public async Task<bool> RemoveDigitalInput(int id)
+    {
+        await DbSemaphore.WaitAsync();
+        try
+        {
+            var di = await _context.DigitalInputs.FindAsync(id);
+            if (di != null)
+            {
+                di.IsDeleted = true;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+        finally{DbSemaphore.Release();}
+    }
+
+    public async Task<bool> RemoveDigitalOutput(int id)
+    {
+        await DbSemaphore.WaitAsync();
+        try
+        {
+            var di = await _context.DigitalOutputs.FindAsync(id);
+            if (di != null)
+            {
+                di.IsDeleted = true;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+        finally{DbSemaphore.Release();}
+    }
+
+    public async Task<bool> RemoveAnalogInput(int id)
+    {
+        await DbSemaphore.WaitAsync();
+        try
+        {
+            var di = await _context.AnalogInputs.FindAsync(id);
+            if (di != null)
+            {
+                di.IsDeleted = true;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+        finally{DbSemaphore.Release();}
+    }
+
+    public async Task<bool> RemoveAnalogOutput(int id)
+    {
+        await DbSemaphore.WaitAsync();
+        try
+        {
+            var di = await _context.AnalogOutputs.FindAsync(id);
+            if (di != null)
+            {
+                di.IsDeleted = true;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+        finally{DbSemaphore.Release();}    }
 }
