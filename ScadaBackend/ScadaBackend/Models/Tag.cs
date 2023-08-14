@@ -1,9 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ScadaBackend.Models;
 
 public abstract class Tag
 {
     #region Properties
-    public int id { get; set; }
+    [Key]
+    public int ID { get; set; }
     public string TagName { get; set; }
     public string Description { get; set; }
     public string IOAddress { get; set; }
@@ -16,9 +19,8 @@ public abstract class Tag
         IsDeleted = false;
     }
 
-    public Tag(int id, string tagName, string description, float currentValue, bool isDeleted=false )
+    public Tag(string tagName, string description, float currentValue, bool isDeleted=false )
     {
-        this.id = id; 
         TagName = tagName;
         Description = description;
         IOAddress = GetIOAddress();
@@ -35,5 +37,8 @@ public abstract class Tag
         return randomValue;
     }
 
-
+    public override string ToString()
+    {
+        return $"ID : {ID}\nTagName : {TagName}\nCurrentValue: {CurrentValue}";
+    }
 }

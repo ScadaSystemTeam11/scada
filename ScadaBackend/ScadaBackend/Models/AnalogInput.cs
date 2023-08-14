@@ -1,3 +1,5 @@
+using ScadaBackend.DTOs;
+
 namespace ScadaBackend.Models;
 
 public class AnalogInput : Tag
@@ -10,9 +12,9 @@ public class AnalogInput : Tag
     public float HighLimit { get; set; }
     public string Units { get; set; }
 
-    public AnalogInput(int id, string tagName, string description, float currentValue, float scanTime, bool onOffScan,
+    public AnalogInput(string tagName, string description, float currentValue, float scanTime, bool onOffScan,
         ICollection<Alarm> alarms, float lowLimit, float highLimit, string units , string driver):
-        base(id, tagName, description, currentValue)
+        base( tagName, description, currentValue)
     {
         Driver = driver;
         ScanTime = scanTime;
@@ -24,4 +26,16 @@ public class AnalogInput : Tag
     }
 
     public AnalogInput() {}
+
+    public AnalogInput(AnalogInputDTO dto)
+    : base(dto.Name, dto.Description, dto.CurrentValue)
+    {
+        Driver = "Driver";
+        ScanTime = dto.ScanTime;
+        OnOffScan = false;
+        LowLimit = dto.LowLimit;
+        HighLimit = dto.HighLimit;
+        Units = dto.Units;
+        
+    }
 }
