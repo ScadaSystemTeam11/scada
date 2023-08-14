@@ -1,3 +1,5 @@
+using ScadaBackend.DTOs;
+
 namespace ScadaBackend.Models;
 
 public class DigitalInput : Tag
@@ -14,6 +16,13 @@ public class DigitalInput : Tag
         ScanTime = scanTime;
         OnOffScan = onOffScan;
         Driver = driver; 
+    }
+
+    public DigitalInput(DigitalInputDTO digitalInputDto) : base(digitalInputDto.Name, digitalInputDto.Description, digitalInputDto.CurrentValue)
+    {
+        ScanTime = digitalInputDto.ScanTime;
+        OnOffScan = false;
+        Driver = "Driver1";
     }
 
 
