@@ -202,6 +202,54 @@ public class TagRepository : ITagRepository
         }
     }
 
+    public async Task UpdateAnalogOutput(AnalogOutput analogOutput)
+    {
+        await DbSemaphore.WaitAsync();
+        try
+        {
+
+            var ai = await _context.AnalogOutputs.FindAsync(analogOutput.ID);
+            if (ai != null)
+            {
+                ai.CurrentValue = analogOutput.CurrentValue;
+                await _context.SaveChangesAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            DbSemaphore.Release();
+        }
+    }
+
+    public async Task UpdateDigitalOutput(DigitalOutput digitalOutput)
+    {
+        await DbSemaphore.WaitAsync();
+        try
+        {
+
+            var ai = await _context.DigitalOutputs.FindAsync(digitalOutput.ID);
+            if (ai != null)
+            {
+                ai.CurrentValue = digitalOutput.CurrentValue;
+                await _context.SaveChangesAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            DbSemaphore.Release();
+        }
+    }
+
+
+
     public async Task UpdateDigitalInput(DigitalInput digitalInput)
     {
         await DbSemaphore.WaitAsync();
