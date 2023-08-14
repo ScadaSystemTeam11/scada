@@ -1,11 +1,13 @@
+using Microsoft.AspNetCore.SignalR;
 using ScadaBackend.DTOs;
+using ScadaBackend.Hub;
 using ScadaBackend.Models;
 
 namespace ScadaBackend.Interfaces;
 
 public interface ITagService
 {
-     Task StartSimulationAsync();
+     Task StartSimulationAsync(IHubContext<TagChangeHub> hubContext);
      Task<bool> SetScan(int id, string type, bool isOn);
      Task<List<DigitalInput>> GetDigitalInputTags();
      Task<List<AnalogInput>> GetAnalogInputTags();
