@@ -1,3 +1,4 @@
+using System.Buffers.Text;
 using Microsoft.AspNetCore.Mvc;
 using ScadaBackend.DTOs;
 using ScadaBackend.Interfaces;
@@ -15,6 +16,56 @@ namespace ScadaBackend.Controllers
         { 
             _tagService = tagService;
         }
+        
+        [HttpPost("CreateDigitalInputTag")]
+        public async Task<IActionResult> CreateDigitalInputTag([FromBody] DigitalInputDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (dto.CurrentValue <= 1 && dto.CurrentValue >= 0) 
+                return BadRequest("Invalid tag value");
+            if (dto.ScanTime < 0) return BadRequest("Invalid scan time");
+            var tag =await _tagService.CreateDigitalInputTag(dto);
+            return Ok(tag);
+        }
+
+        [HttpPost("CreateDigitalOutputTag")]
+        public async Task<IActionResult> CreateDigitalOutputTag([FromBody] DigitalOutputDTO dto)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (dto.InitialValue < 0) return BadRequest("Invalid value of tag");
+            var tag = await _tagService.CreateDigitalOutputTag(dto);
+            return Ok(tag);
+        }
+        
+        [HttpPost("CreateAnalogInputTag")]
+        public async Task<IActionResult> CreateAnalogInputTag([FromBody] AnalogInputDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (dto.CurrentValue < 0) return BadRequest("Invalid tag value");
+            if (dto.ScanTime < 0) return BadRequest("Invalid scan time");
+            if (dto.HighLimit <= dto.LowLimit) return BadRequest("Invalid high limit");
+            if (dto.LowLimit < 0) return BadRequest("Invalid low limit");
+            var tag =await _tagService.CreateAnalogInputTag(dto);
+            return Ok(tag);
+        }
+        
+        [HttpPost("CreateAnalogOutputTag")]
+        public async Task<IActionResult> CreateAnalogOutputTag([FromBody] AnalogOutputDTO dto)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (dto.InitialValue < 0) return BadRequest("Invalid value of tag");
+            if (dto.HighLimit <= dto.LowLimit) return BadRequest("Invalid high limit");
+            if (dto.LowLimit < 0) return BadRequest("Invalid low limit");
+            var tag = await _tagService.CreateAnalogOutputTag(dto);
+            return Ok(tag);
+        }
+        
         
         [HttpGet("DigitalInputs")]
         public async Task<IActionResult> GetDigitalInputs()

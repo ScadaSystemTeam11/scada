@@ -1,4 +1,5 @@
 using scada.Services;
+using ScadaBackend.DTOs;
 using ScadaBackend.Interfaces;
 using ScadaBackend.Models;
 using ScadaBackend.Repository;
@@ -109,5 +110,24 @@ public class TagService : ITagService  {
             return await this._tagRepository.SetScanForAnalogInput(ai, isOn);
         }
     }
-    
+
+    public async Task<DigitalInputDTO> CreateDigitalInputTag(DigitalInputDTO dto)
+    {
+        return await _tagRepository.CreateDigitalInput(dto);
+    }
+
+    public async Task<DigitalOutputDTO> CreateDigitalOutputTag(DigitalOutputDTO dto)
+    {
+        return await _tagRepository.CreateDigitalOutput(dto);
+    }
+
+    public async Task<AnalogInputDTO> CreateAnalogInputTag(AnalogInputDTO dto)
+    {
+        return await _tagRepository.CreateAnalogInput(dto);
+    }
+
+    public async Task<AnalogOutputDTO> CreateAnalogOutputTag(AnalogOutputDTO dto)
+    {
+        return await _tagRepository.CreateAnalogOutput(dto);
+    }
 }
