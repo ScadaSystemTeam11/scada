@@ -160,7 +160,6 @@ namespace ScadaBackend.Controllers
             }
         }
         
-        //TODO:  [HttpGet("AnalogOutputs")]  [HttpGet("DigitalOutputs")]
 
         [HttpPut("InputScanOnOff")]
         public async Task<IActionResult> SetTagScanOnOff(
