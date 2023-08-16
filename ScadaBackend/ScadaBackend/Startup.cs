@@ -39,7 +39,7 @@ public class Startup
         
         
         services.AddDbContext<AppContext>(options =>
-            options.UseNpgsql(connectionString), ServiceLifetime.Singleton);
+            options.UseNpgsql(connectionString), ServiceLifetime.Scoped);
 
 
         services.AddScoped<IUserRepository, UserRepository>();
