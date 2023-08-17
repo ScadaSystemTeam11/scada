@@ -8,7 +8,7 @@ namespace ScadaBackend.Interfaces;
 public interface ITagService
 {
      Task StartSimulationAsync(IHubContext<TagChangeHub> hubContext);
-     Task<bool> SetScan(int id, string type, bool isOn);
+     Task<bool> SetScan(Guid id, string type, bool isOn);
      Task<List<DigitalInput>> GetDigitalInputTags();
      Task<List<AnalogInput>> GetAnalogInputTags();
      Task<List<AnalogOutput>> GetAnalogOutputs();
@@ -19,15 +19,17 @@ public interface ITagService
      Task<DigitalOutputDTO> CreateDigitalOutputTag(DigitalOutputDTO dto);
      Task<AnalogInputDTO> CreateAnalogInputTag(AnalogInputDTO dto);
      Task<AnalogOutputDTO> CreateAnalogOutputTag(AnalogOutputDTO dto);
-     Task<AnalogOutput> GetAnalogOutputById(int id);
-     Task<DigitalOutput> GetDigitalOutputById(int id);
+     Task<AnalogOutput> GetAnalogOutputById(Guid id);
+     Task<DigitalOutput> GetDigitalOutputById(Guid id);
      Task<bool> UpdateAnalogOutput(AnalogOutput analogOutput);
      Task<bool> UpdateDigitalOutput(DigitalOutput digitalOutput);
 
 
-     Task<bool> DeleteDigitalInputTag(int id);
-     Task<bool> DeleteDigitalOutputTag(int id);
-     Task<bool> DeleteAnalogInputTag(int id);
-     Task<bool> DeleteAnalogOutputTag(int id);
+     Task<bool> DeleteDigitalInputTag(Guid id);
+     Task<bool> DeleteDigitalOutputTag(Guid id);
+     Task<bool> DeleteAnalogInputTag(Guid id);
+     Task<bool> DeleteAnalogOutputTag(Guid id);
+
+    Task<List<Tag>> GetActiveInputTags();
 
 }

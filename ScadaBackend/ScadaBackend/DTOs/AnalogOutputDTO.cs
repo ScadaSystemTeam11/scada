@@ -2,6 +2,8 @@ namespace ScadaBackend.DTOs;
 
 public class AnalogOutputDTO
 {
+    
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public float InitialValue { get; set; }
@@ -10,8 +12,9 @@ public class AnalogOutputDTO
     public string Units { get; set; }
 
 
-    public AnalogOutputDTO(string name, string description, float initialValue, float lowLimit, float highLimit, string units)
+    public AnalogOutputDTO(Guid id, string name, string description, float initialValue, float lowLimit, float highLimit, string units)
     {
+        Id = id;
         Name = name;
         Description = description;
         InitialValue = initialValue;

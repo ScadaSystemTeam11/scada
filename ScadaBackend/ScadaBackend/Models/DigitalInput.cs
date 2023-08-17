@@ -9,16 +9,20 @@ public class DigitalInput : Tag
     public bool OnOffScan { get; set; }
     public string Driver { get; set; }
 
+    public DigitalInput()
+    {
+    }
 
-    public DigitalInput( string tagName, string description,  float scanTime, bool onOffScan, string driver, float currentValue)
-        :base(tagName, description, currentValue)
+
+    public DigitalInput(Guid id, string tagName, string description,  float scanTime, bool onOffScan, string driver, float currentValue)
+        :base(id, tagName, description, currentValue)
     {
         ScanTime = scanTime;
         OnOffScan = onOffScan;
         Driver = driver; 
     }
 
-    public DigitalInput(DigitalInputDTO digitalInputDto) : base(digitalInputDto.Name, digitalInputDto.Description, digitalInputDto.CurrentValue)
+    public DigitalInput(DigitalInputDTO digitalInputDto) : base(digitalInputDto.Id, digitalInputDto.Name, digitalInputDto.Description, digitalInputDto.CurrentValue)
     {
         ScanTime = digitalInputDto.ScanTime;
         OnOffScan = false;

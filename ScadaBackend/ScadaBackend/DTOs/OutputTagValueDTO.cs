@@ -2,11 +2,11 @@ namespace ScadaBackend.DTOs;
 
 public class OutputTagValueDTO
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Type { get; set; }
     public int Value { get; set; }
     
-    public OutputTagValueDTO(int id, string type, int value)
+    public OutputTagValueDTO(Guid id, string type, int value)
     {
         Id = id;
         Type = type;

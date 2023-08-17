@@ -6,7 +6,7 @@ public abstract class Tag
 {
     #region Properties
     [Key]
-    public int ID { get; set; }
+    public Guid ID { get; set; }
     public string TagName { get; set; }
     public string Description { get; set; }
     public string IOAddress { get; set; }
@@ -19,8 +19,9 @@ public abstract class Tag
         IsDeleted = false;
     }
 
-    public Tag(string tagName, string description, float currentValue, bool isDeleted=false )
+    public Tag(Guid id, string tagName, string description, float currentValue, bool isDeleted=false )
     {
+        ID = id;
         TagName = tagName;
         Description = description;
         IOAddress = GetIOAddress();

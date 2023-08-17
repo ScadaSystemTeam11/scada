@@ -49,9 +49,9 @@ public static class DbInitializer
     {
         var analogOutputs = new AnalogOutput[]
         {
-          new ("Kontrola rezervoara 1", "Distribucija cokoladnog mleka",
+          new (Guid.NewGuid(), "Kontrola rezervoara 1", "Distribucija cokoladnog mleka",
               10, 18, 5, 150, "L" ),
-          new ("Kontrola rezervoara 3", "Distribucija sojinog mleka",
+          new (Guid.NewGuid(), "Kontrola rezervoara 3", "Distribucija sojinog mleka",
               10, 30, 5, 150, "L" )
         };
 
@@ -66,9 +66,9 @@ public static class DbInitializer
     {
         var analogInputs = new AnalogInput[]
         {
-           new ("Rezervoar 1", "Rezervoar za cokoladno mleko", 18, 3,
+           new (Guid.NewGuid(), "Rezervoar 1", "Rezervoar za cokoladno mleko", 18, 3,
                true, new List<Alarm>(), 5, 150, "L", "Driver1"),
-           new ("Rezervoar 3", "Rezervoar za sojino mleko", 30, 3,
+           new (Guid.NewGuid(), "Rezervoar 3", "Rezervoar za sojino mleko", 30, 3,
                true, new List<Alarm>(), 5, 150, "L", "Driver1")
 
         };
@@ -85,8 +85,8 @@ public static class DbInitializer
     {
         var digitalOutputs = new DigitalOutput[]
         {
-            new ("Kontrola ventila 14", "Pustanje tecnosti u rezervoar", 0, 0),
-            new ("Kontrola ventila 22", "Pustanje tecnosti u rezervoar", 0, 0),
+            new (Guid.NewGuid(), "Kontrola ventila 14", "Pustanje tecnosti u rezervoar", 0, 0),
+            new (Guid.NewGuid(), "Kontrola ventila 22", "Pustanje tecnosti u rezervoar", 0, 0),
           
 
         };
@@ -103,8 +103,8 @@ public static class DbInitializer
     {
         var digitalInputs = new DigitalInput[]
         {
-            new ("Ventil 14", "Dovod tecnosti", 3, true, "driver1", 0),
-            new ("Ventil 22", "Dovod tecnosti", 3, true, "driver1", 0),
+            new (Guid.NewGuid(), "Ventil 14", "Dovod tecnosti", 3, true, "driver1", 0),
+            new (Guid.NewGuid(), "Ventil 22", "Dovod tecnosti", 3, true, "driver1", 0),
          
         };
 

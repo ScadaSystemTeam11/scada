@@ -105,7 +105,7 @@ public class TagService : ITagService  {
         }
     }
 
-    public async Task<bool> SetScan(int id, string type, bool isOn)
+    public async Task<bool> SetScan(Guid id, string type, bool isOn)
     {
         if (type == "digital")
         {
@@ -119,32 +119,32 @@ public class TagService : ITagService  {
         }
     }
 
-    public async Task<AnalogOutput> GetAnalogOutputById(int id)
+    public async Task<AnalogOutput> GetAnalogOutputById(Guid id)
     {
         return await _tagRepository.GetAnalogOutputById(id);
     }
 
-    public async Task<DigitalOutput> GetDigitalOutputById(int id)
+    public async Task<DigitalOutput> GetDigitalOutputById(Guid id)
     {
         return await _tagRepository.GetDigitalOutputById(id);
     }
 
-    public async Task<bool> DeleteDigitalInputTag(int id)
+    public async Task<bool> DeleteDigitalInputTag(Guid id)
     {
         return await _tagRepository.RemoveDigitalInput(id);
     }
 
-    public async Task<bool> DeleteDigitalOutputTag(int id)
+    public async Task<bool> DeleteDigitalOutputTag(Guid id)
     {
         return await _tagRepository.RemoveDigitalOutput(id);
     }
 
-    public async Task<bool> DeleteAnalogInputTag(int id)
+    public async Task<bool> DeleteAnalogInputTag(Guid id)
     {
         return await _tagRepository.RemoveAnalogInput(id);
     }
 
-    public async Task<bool> DeleteAnalogOutputTag(int id)
+    public async Task<bool> DeleteAnalogOutputTag(Guid id)
     {
         return await _tagRepository.RemoveAnalogOutput(id);
     }
@@ -187,5 +187,11 @@ public class TagService : ITagService  {
     public async Task<List<DigitalOutput>> GetDigitalOutputs()
     {
         return await _tagRepository.GetDigitalOutputs();
+    }
+
+    public async Task<List<Tag>> GetActiveInputTags()
+    {
+
+        return await _tagRepository.GetActiveInputTags();
     }
 }

@@ -15,7 +15,7 @@ public class TagRepository : ITagRepository
         _context = context;
     }
 
-    public async Task<DigitalInput> GetDigitalInputById(int id)
+    public async Task<DigitalInput> GetDigitalInputById(Guid id)
     {
         await DbSemaphore.WaitAsync();
         try
@@ -28,7 +28,7 @@ public class TagRepository : ITagRepository
         }
     }
 
-    public async Task<AnalogInput> GetAnalogInputById(int id)
+    public async Task<AnalogInput> GetAnalogInputById(Guid id)
     {
         await DbSemaphore.WaitAsync();
         try
@@ -316,7 +316,7 @@ public class TagRepository : ITagRepository
         }
     }
 
-    public async Task<bool> RemoveDigitalInput(int id)
+    public async Task<bool> RemoveDigitalInput(Guid id)
     {
         await DbSemaphore.WaitAsync();
         try
@@ -333,7 +333,7 @@ public class TagRepository : ITagRepository
         finally{DbSemaphore.Release();}
     }
 
-    public async Task<bool> RemoveDigitalOutput(int id)
+    public async Task<bool> RemoveDigitalOutput(Guid id)
     {
         await DbSemaphore.WaitAsync();
         try
@@ -350,7 +350,7 @@ public class TagRepository : ITagRepository
         finally{DbSemaphore.Release();}
     }
 
-    public async Task<bool> RemoveAnalogInput(int id)
+    public async Task<bool> RemoveAnalogInput(Guid id)
     {
         await DbSemaphore.WaitAsync();
         try
@@ -367,7 +367,7 @@ public class TagRepository : ITagRepository
         finally{DbSemaphore.Release();}
     }
 
-    public async Task<bool> RemoveAnalogOutput(int id)
+    public async Task<bool> RemoveAnalogOutput(Guid id)
     {
         await DbSemaphore.WaitAsync();
         try
@@ -383,15 +383,41 @@ public class TagRepository : ITagRepository
         }
         finally{DbSemaphore.Release();}    }
 
-    public async Task<DigitalOutput> GetDigitalOutputById(int id)
+    public async Task<DigitalOutput> GetDigitalOutputById(Guid id)
     {
         return await _context.DigitalOutputs.FindAsync(id);
     }
 
-    public async Task<AnalogOutput> GetAnalogOutputById(int id)
+    public async Task<AnalogOutput> GetAnalogOutputById(Guid id)
     {
         return await _context.AnalogOutputs.FindAsync(id);
     }
-    
-    
+
+    public async Task<List<Tag>> GetActiveInputTags()
+    {
+        await DbSemaphore.WaitAsync();
+        try
+        {
+            var digitalInputs = await _context.DigitalInputs
+                .Where(di => di.OnOffScan == true && di.IsDeleted == false)
+                .ToListAsync();
+
+            var analogInputs = await _context.AnalogInputs
+                .Where(ai => ai.OnOffScan == true && ai.IsDeleted == false)
+                .ToListAsync();
+
+            List<Tag> activeInputTags = new List<Tag>();
+            activeInputTags.AddRange(digitalInputs);
+            activeInputTags.AddRange(analogInputs);
+
+            return activeInputTags;
+        }
+        finally
+        {
+            DbSemaphore.Release();
+        }
+    }
+
+
+
 }

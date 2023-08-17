@@ -9,8 +9,8 @@ public class AnalogOutput : Tag
     public float HighLimit { get; set; }
     public string Units { get; set; }
 
-    public AnalogOutput(string tagName, string description,  float initialValue, float currentValue, float lowLimit, float highLimit, string units)
-        :base( tagName, description, currentValue)
+    public AnalogOutput(Guid id, string tagName, string description,  float initialValue, float currentValue, float lowLimit, float highLimit, string units)
+        :base(id, tagName, description, currentValue)
     {
         InitialValue = initialValue;
         LowLimit = lowLimit;
@@ -19,7 +19,7 @@ public class AnalogOutput : Tag
     }
 
     public AnalogOutput(AnalogOutputDTO dto)
-    : base(dto.Name, dto.Description, dto.InitialValue)
+    : base(dto.Id, dto.Name, dto.Description, dto.InitialValue)
     {
         InitialValue = dto.InitialValue;
         LowLimit = dto.LowLimit;

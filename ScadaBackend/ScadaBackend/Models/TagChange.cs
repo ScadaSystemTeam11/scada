@@ -5,8 +5,8 @@ namespace ScadaBackend.Models;
 public class TagChange
 {
     [Key]
-    public int Id { get; set; }
-    public int TagId { get; set; }
+    public Guid Id { get; set; }
+    public Guid TagId { get; set; }
     public string TagName { get; set; }
     public string Address { get; set; }
     public DateTime Timestamp { get; set; }

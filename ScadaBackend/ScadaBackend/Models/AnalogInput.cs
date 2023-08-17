@@ -12,9 +12,9 @@ public class AnalogInput : Tag
     public float HighLimit { get; set; }
     public string Units { get; set; }
 
-    public AnalogInput(string tagName, string description, float currentValue, float scanTime, bool onOffScan,
+    public AnalogInput(Guid id, string tagName, string description, float currentValue, float scanTime, bool onOffScan,
         ICollection<Alarm> alarms, float lowLimit, float highLimit, string units , string driver):
-        base( tagName, description, currentValue)
+        base( id, tagName, description, currentValue)
     {
         Driver = driver;
         ScanTime = scanTime;
@@ -28,7 +28,7 @@ public class AnalogInput : Tag
     public AnalogInput() {}
 
     public AnalogInput(AnalogInputDTO dto)
-    : base(dto.Name, dto.Description, dto.CurrentValue)
+    : base(dto.Id , dto.Name, dto.Description, dto.CurrentValue)
     {
         Driver = "Driver";
         ScanTime = dto.ScanTime;

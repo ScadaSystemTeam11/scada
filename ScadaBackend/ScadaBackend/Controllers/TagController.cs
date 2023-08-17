@@ -70,7 +70,7 @@ namespace ScadaBackend.Controllers
         }
 
         [HttpDelete("DeleteDigitalInputTag")]
-        public async Task<IActionResult> DeleteDigitalInputTag([FromQuery] int id)
+        public async Task<IActionResult> DeleteDigitalInputTag([FromQuery] Guid id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var deleted = _tagService.DeleteDigitalInputTag(id);
@@ -78,7 +78,7 @@ namespace ScadaBackend.Controllers
         }
 
         [HttpDelete("DeleteAnalogInputTag")]
-        public async Task<IActionResult> DeleteAnalogInputTag([FromQuery] int id)
+        public async Task<IActionResult> DeleteAnalogInputTag([FromQuery] Guid id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var deleted = _tagService.DeleteAnalogInputTag(id);
@@ -86,7 +86,7 @@ namespace ScadaBackend.Controllers
         }
 
         [HttpDelete("DeleteDigitalOutputTag")]
-        public async Task<IActionResult> DeleteDigitalOutputTag([FromQuery] int id)
+        public async Task<IActionResult> DeleteDigitalOutputTag([FromQuery] Guid id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var deleted = _tagService.DeleteDigitalOutputTag(id);
@@ -94,7 +94,7 @@ namespace ScadaBackend.Controllers
         }
 
         [HttpDelete("DeleteAnalogOutputTag")]
-        public async Task<IActionResult> DeleteAnalogOutputTag([FromQuery] int id)
+        public async Task<IActionResult> DeleteAnalogOutputTag([FromQuery] Guid id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var deleted = _tagService.DeleteAnalogOutputTag(id);
@@ -212,6 +212,21 @@ namespace ScadaBackend.Controllers
 
             return BadRequest("Type of tag must be 'digital' or 'analog'");
 
+        }
+
+
+        [HttpGet("ActiveInputs")]
+        public async Task<IActionResult> GetActiveIputs()
+        {
+            try
+            {
+                var activeInputs = await _tagService.GetActiveInputTags();
+                return Ok(activeInputs);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "An error occurred while fetching active inputs.");
+            }
         }
     }
 
