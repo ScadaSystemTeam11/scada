@@ -15,7 +15,8 @@ public class TagChange
     public TagChange() {}
 
     public TagChange(Tag tag, float value, string address)
-    {   
+    {
+        Id = Guid.NewGuid();
         TagId = tag.ID;
         TagName = tag.TagName;
         Address = address;

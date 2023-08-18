@@ -59,7 +59,8 @@ public class TagService : ITagService  {
             {
                 digitalInput.CurrentValue = value;
                 await _tagRepository.UpdateDigitalInput(digitalInput);
-                
+                Console.WriteLine($"Digital Input {digitalInput.ID} value changed: {value}");
+
                 if (digitalInput.OnOffScan)
                 {
                     TagChange tagChange = new TagChange(digitalInput, value, digitalInput.IOAddress);
@@ -67,6 +68,8 @@ public class TagService : ITagService  {
 
                     string serializedInput = JsonConvert.SerializeObject(digitalInput);
                     await hubContext.Clients.All.SendAsync("TagValueChanged", serializedInput);
+
+                    Console.WriteLine($"Sent TagValueChanged event for Digital Input {digitalInput.ID}");
                 }
             } else { continue;}
             
@@ -89,6 +92,7 @@ public class TagService : ITagService  {
             {
                 analogInput.CurrentValue = value;
                 await _tagRepository.UpdateAnalogInput(analogInput);
+                Console.WriteLine($"Analog Input {analogInput.ID} value changed: {value}");
                 if (analogInput.OnOffScan)
                 {
                     TagChange tagChange = new TagChange(analogInput, value, analogInput.IOAddress);
@@ -96,6 +100,8 @@ public class TagService : ITagService  {
                     
                     string serializedInput = JsonConvert.SerializeObject(analogInput);
                     await hubContext.Clients.All.SendAsync("TagValueChanged", serializedInput);
+
+                    Console.WriteLine($"Sent TagValueChanged event for Analog Input {analogInput.ID}");
 
                 }
             }
