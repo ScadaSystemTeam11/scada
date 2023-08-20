@@ -70,7 +70,8 @@ public class TagService : ITagService  {
                     await hubContext.Clients.All.SendAsync("TagValueChanged", serializedInput);
 
                 }
-            } else { continue;}
+            }
+            else { continue;}
             
             await Task.Delay(TimeSpan.FromSeconds(digitalInput.ScanTime));
         }

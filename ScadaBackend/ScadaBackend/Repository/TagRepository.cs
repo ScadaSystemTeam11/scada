@@ -207,7 +207,6 @@ public class TagRepository : ITagRepository
             if (ai != null)
             {
                 ai.CurrentValue = analogInput.CurrentValue;
-                Console.WriteLine(ai);
                 await _context.SaveChangesAsync();
             }
         }
