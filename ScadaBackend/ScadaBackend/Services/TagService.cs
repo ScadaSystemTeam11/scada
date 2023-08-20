@@ -173,14 +173,14 @@ public class TagService : ITagService  {
         return await _tagRepository.CreateAnalogOutput(dto);
     }
 
-    public async Task<bool> UpdateAnalogOutput(AnalogOutput analogOutput)
+    public async Task<bool> UpdateAnalogOutput(Guid id, int value)
     {
-        return await _tagRepository.UpdateAnalogOutput(analogOutput);
+        return await _tagRepository.UpdateAnalogOutput(id,  value);
     }
 
-    public async Task<bool> UpdateDigitalOutput(DigitalOutput digitalOutput)
+    public async Task<bool> UpdateDigitalOutput(Guid id, int value)
     {
-        return await _tagRepository.UpdateDigitalOutput(digitalOutput);
+        return await _tagRepository.UpdateDigitalOutput(id, value);
     }
 
     public async Task<List<AnalogOutput>> GetAnalogOutputs()

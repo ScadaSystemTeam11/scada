@@ -14,9 +14,9 @@ public interface ITagRepository
     Task<DigitalOutput> GetDigitalOutputById(Guid id);
     Task<AnalogOutput> GetAnalogOutputById(Guid id);
     Task UpdateAnalogInput(AnalogInput analogInput);
-    Task<bool> UpdateAnalogOutput(AnalogOutput analogOutput);
+    Task<bool> UpdateAnalogOutput(Guid id, int value);
     Task UpdateDigitalInput(DigitalInput digitalInput);
-    Task<bool> UpdateDigitalOutput(DigitalOutput digitalOutput);
+    Task<bool> UpdateDigitalOutput(Guid id, int value);
     Task CreateTagChange(TagChange tagChange);
     Task<bool> SetScanForDigitalInput(DigitalInput digitalInput, bool isOn);
     Task<bool> SetScanForAnalogInput(AnalogInput analogInput, bool scan);

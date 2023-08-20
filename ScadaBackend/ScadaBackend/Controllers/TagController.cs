@@ -188,7 +188,7 @@ namespace ScadaBackend.Controllers
                 var di = await _tagService.GetDigitalOutputById(dto.Id);
                 if (di == null)
                     return BadRequest("Tag with that Id does not exist");
-                bool updated = await _tagService.UpdateDigitalOutput(di);
+                bool updated = await _tagService.UpdateDigitalOutput(di.ID, dto.Value);
                 return Ok(updated);
             }
 
@@ -206,7 +206,7 @@ namespace ScadaBackend.Controllers
                     return BadRequest("Value of tag is lower than limit");
                 }
 
-                bool updated = await _tagService.UpdateAnalogOutput(analogOutput);
+                bool updated = await _tagService.UpdateAnalogOutput(dto.Id, dto.Value);
                 return Ok(updated);
             }
 
