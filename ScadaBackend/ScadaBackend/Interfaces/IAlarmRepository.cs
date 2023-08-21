@@ -8,6 +8,8 @@ namespace ScadaBackend.Repository;
         Task<Alarm> GetAlarmById(Guid id);
         Task<bool> RemoveAlarm(Guid id);
         Task AddAlarmAlert(AlarmAlert alarmAlert);
+        Task<List<AlarmAlert>> GetAlarmAlertsByPriority(int priority);
+        Task<List<AlarmAlert>> GetAlarmAlertsInTimePeriod(DateTime start, DateTime end);
 
-    }
+}
 

@@ -81,5 +81,38 @@ namespace ScadaBackend.Repository
             }
 
         }
+
+        public async Task<List<AlarmAlert>> GetAlarmAlertsByPriority(int priority)
+        {
+            await DbSemaphore.WaitAsync();
+            try
+            {
+                return await _context.AlarmAlerts
+                           .Include(alert => alert.Alarm)
+                           .Where(alert => alert.Alarm.Priority == (Alarm.AlarmPriority)priority)
+                           .ToListAsync();
+            }
+            finally
+            {
+                DbSemaphore.Release();
+            }
+
+        }
+
+        public async Task<List<AlarmAlert>> GetAlarmAlertsInTimePeriod(DateTime start, DateTime end)
+        {
+            await DbSemaphore.WaitAsync();
+            try
+            {
+                return await _context.AlarmAlerts
+                .Include(alert => alert.Alarm)
+                .Where(alert => alert.Timestamp >= start && alert.Timestamp <= end)
+                .ToListAsync();
+            }
+            finally
+            {
+                DbSemaphore.Release();
+            }
+        }
     }
 }
