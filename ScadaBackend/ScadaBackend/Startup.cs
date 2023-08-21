@@ -44,7 +44,10 @@ public class Startup
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITagRepository, TagRepository>();
+        services.AddScoped<IAlarmRepository, AlarmRepository>(); // Add this line
+        services.AddScoped<IAlarmService, AlarmService>();
         services.AddScoped<ITagService, TagService>();
+
 
         services.AddSignalR();
         services.AddControllersWithViews();

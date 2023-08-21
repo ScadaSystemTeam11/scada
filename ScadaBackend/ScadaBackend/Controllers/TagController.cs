@@ -1,5 +1,6 @@
 using System.Buffers.Text;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using ScadaBackend.DTOs;
 using ScadaBackend.Interfaces;
 using ScadaBackend.Models;
@@ -72,9 +73,11 @@ namespace ScadaBackend.Controllers
         [HttpDelete("DeleteDigitalInputTag")]
         public async Task<IActionResult> DeleteDigitalInputTag([FromQuery] Guid id)
         {
+            Console.WriteLine("Ulazimo ovde");
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var deleted = _tagService.DeleteDigitalInputTag(id);
-            return Ok(deleted);
+            Console.WriteLine("This tag has been deleted");
+            return Ok("Deleted Tag succesfully");
         }
 
         [HttpDelete("DeleteAnalogInputTag")]
@@ -82,7 +85,7 @@ namespace ScadaBackend.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var deleted = _tagService.DeleteAnalogInputTag(id);
-            return Ok(deleted);
+            return Ok("Deleted Tag succesfully");
         }
 
         [HttpDelete("DeleteDigitalOutputTag")]
@@ -90,7 +93,7 @@ namespace ScadaBackend.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var deleted = _tagService.DeleteDigitalOutputTag(id);
-            return Ok(deleted);
+            return Ok("Deleted Tag succesfully");
         }
 
         [HttpDelete("DeleteAnalogOutputTag")]
@@ -98,7 +101,7 @@ namespace ScadaBackend.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var deleted = _tagService.DeleteAnalogOutputTag(id);
-            return Ok(deleted);
+            return Ok("Deleted Tag succesfully");
         }
 
 
@@ -228,6 +231,23 @@ namespace ScadaBackend.Controllers
                 return StatusCode(500, "An error occurred while fetching active inputs.");
             }
         }
+
+
+        [HttpGet("AllTags")]
+        public async Task<IActionResult> GetAllTags()
+        {
+            try
+            {
+                var allTags = await _tagService.GetAllTags();
+
+                return Ok(allTags);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "An error occurred while fetching tags.");
+            }
+        }
+
     }
 
 }

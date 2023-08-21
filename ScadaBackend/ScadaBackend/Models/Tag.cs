@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
 namespace ScadaBackend.Models;
@@ -42,4 +43,5 @@ public abstract class Tag
     {
         return $"ID : {ID}\nTagName : {TagName}\nCurrentValue: {CurrentValue}";
     }
+
 }

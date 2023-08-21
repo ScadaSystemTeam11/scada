@@ -52,7 +52,8 @@ namespace ScadaBackend.Controllers
             UserDTO userDto = new UserDTO(user);
 
             var tagChangeHubContext = HttpContext.RequestServices.GetRequiredService<IHubContext<TagChangeHub>>();
-            _tagService.StartSimulationAsync(tagChangeHubContext);
+            var alarmAlertedHubContext = HttpContext.RequestServices.GetRequiredService<IHubContext<AlarmAlertedHub>>();
+            _tagService.StartSimulationAsync(tagChangeHubContext, alarmAlertedHubContext);
             return Ok(userDto);
         }
 
