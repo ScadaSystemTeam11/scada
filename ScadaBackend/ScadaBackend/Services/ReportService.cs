@@ -23,7 +23,7 @@ namespace ScadaBackend.Services
 
             var sortedAlarms = alarmsWithPriority.OrderBy(alarm => alarm.Timestamp);
 
-            return (List<AlarmAlert>)sortedAlarms;
+            return sortedAlarms.ToList<AlarmAlert>();
         }
 
         public async Task<List<AlarmAlert>> GetAlarmsInTimePeriod(DateTime start, DateTime end)
@@ -34,7 +34,7 @@ namespace ScadaBackend.Services
                 .OrderByDescending(alarm => alarm.Alarm.Priority)
                 .ThenByDescending(alarm => alarm.Timestamp);
 
-            return (List<AlarmAlert>)sortedAlarms;
+            return sortedAlarms.ToList<AlarmAlert>();
         }
 
         public async  Task<List<AnalogInputLastValueDTO>> GetLastValuesOfAITags()
@@ -55,7 +55,7 @@ namespace ScadaBackend.Services
         }
 
 
-        public async Task<List<TagChange>> GetTagValuesById(string id)
+        public async Task<List<TagChange>> GetTagValuesById(Guid id)
         {
             return  await _tagRepository.GetTagValuesById(id);
         }

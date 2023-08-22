@@ -113,8 +113,11 @@ public class TagService : ITagService  {
                         {
                             AlarmAlert alarmAlert = new(alarm);
                             await _alarmRepository.AddAlarmAlert(alarmAlert);
-                            string serializedAlarmInput = JsonConvert.SerializeObject(analogInput);
-                            await hubContext.Clients.All.SendAsync("AlarmAlerted", serializedAlarmInput);
+                            string serializedAlarmInput = JsonConvert.SerializeObject(alarmAlert);
+                            await alarmHubContext.Clients.All.SendAsync("AlarmAlerted", serializedAlarmInput);
+
+                            Console.WriteLine($"ALARM SET OFF!!!");
+
                         }
                     }
 

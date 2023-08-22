@@ -37,7 +37,6 @@ namespace ScadaBackend.Controllers
         [HttpPost("CreateDigitalOutputTag")]
         public async Task<IActionResult> CreateDigitalOutputTag([FromBody] DigitalOutputDTO dto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
             if (dto.InitialValue < 0) return BadRequest("Invalid value of tag");
             var tag = await _tagService.CreateDigitalOutputTag(dto);
             return Ok(tag);
@@ -191,6 +190,7 @@ namespace ScadaBackend.Controllers
                 var di = await _tagService.GetDigitalOutputById(dto.Id);
                 if (di == null)
                     return BadRequest("Tag with that Id does not exist");
+                di.CurrentValue = dto.Value;
                 bool updated = await _tagService.UpdateDigitalOutput(di);
                 return Ok(updated);
             }
@@ -208,7 +208,7 @@ namespace ScadaBackend.Controllers
                 {
                     return BadRequest("Value of tag is lower than limit");
                 }
-
+                analogOutput.CurrentValue = dto.Value;
                 bool updated = await _tagService.UpdateAnalogOutput(analogOutput);
                 return Ok(updated);
             }

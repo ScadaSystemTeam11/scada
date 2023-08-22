@@ -425,7 +425,7 @@ public class TagRepository : ITagRepository
         await DbSemaphore.WaitAsync();
         try
         {
-            var analogInputTags = await GetAnalogInputTags();
+            var analogInputTags = await _context.AnalogInputs.ToListAsync();
             var analogInputLastValues = new List<AnalogInputLastValueDTO>();
 
             foreach (var analogInput in analogInputTags)
@@ -458,7 +458,7 @@ public class TagRepository : ITagRepository
         await DbSemaphore.WaitAsync();
         try
         {
-            var digitalInputTags = await GetDigitalInputTags();
+            var digitalInputTags = await _context.DigitalInputs.ToListAsync();
             var digitalInputLastValues = new List<DigitalInputLastValueDTO>();
 
             foreach (var digitalInput in digitalInputTags)
@@ -504,13 +504,13 @@ public class TagRepository : ITagRepository
         }
     }
 
-    public async Task<List<TagChange>> GetTagValuesById(string id)
+    public async Task<List<TagChange>> GetTagValuesById(Guid id)
     {
         await DbSemaphore.WaitAsync();
         try
         {
             var tagChangesForTag = await _context.TagChanges
-                .Where(tc => tc.TagId == Guid.Parse(id))
+                .Where(tc => tc.TagId == id)
                 .OrderByDescending(tc => tc.Timestamp)
                 .ToListAsync();
 

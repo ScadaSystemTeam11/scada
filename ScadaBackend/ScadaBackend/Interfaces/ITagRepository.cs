@@ -37,6 +37,6 @@ public interface ITagRepository
 
     Task<List<TagChange>> GetTagsInTimePeriod(DateTime start, DateTime end);
 
-    Task<List<TagChange>> GetTagValuesById(string id);
+    Task<List<TagChange>> GetTagValuesById(Guid id);
 
 }

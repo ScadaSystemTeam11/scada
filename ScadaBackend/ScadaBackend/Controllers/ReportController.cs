@@ -13,7 +13,7 @@ namespace ScadaBackend.Controllers
             _reportService = reportService;
         }
 
-        [HttpGet("/TimePeriodAlarmReport")]
+        [HttpGet("TimePeriodAlarmReport")]
         public async Task<IActionResult> GetAlarmsInTimePeriod([FromQuery] DateTime start, [FromQuery] DateTime end)
         {
             try
@@ -28,7 +28,7 @@ namespace ScadaBackend.Controllers
 
         }
 
-        [HttpGet("/PriorityReport")]
+        [HttpGet("PriorityReport")]
         public async Task<IActionResult> GetAlarmsByPriority([FromQuery] int priority)
         {
             try
@@ -43,7 +43,7 @@ namespace ScadaBackend.Controllers
             }
         }
 
-        [HttpGet("/TimePeriodTagsReport")]
+        [HttpGet("TimePeriodTagsReport")]
         public async Task<IActionResult> GetTagsByInTimePeriod([FromQuery] DateTime start, [FromQuery] DateTime end)
         {
             try
@@ -57,7 +57,7 @@ namespace ScadaBackend.Controllers
             }
         }
 
-        [HttpGet("/LastAIReport")]
+        [HttpGet("LastAIReport")]
         public async Task<IActionResult> GetLastValuesOfAITags()
         {
             try
@@ -86,7 +86,7 @@ namespace ScadaBackend.Controllers
         }
 
         [HttpGet("TagsByIDReport")]
-        public async Task<IActionResult> GetAllTagsById([FromQuery] string id)
+        public async Task<IActionResult> GetAllTagsById([FromQuery] Guid id)
         {
             try
             {
