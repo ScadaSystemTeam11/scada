@@ -230,9 +230,9 @@ public class TagRepository : ITagRepository
             if (ai != null)
             {
                 ai.CurrentValue = value;
-                await _context.SaveChangesAsync();
                 TagChange tagChange = new TagChange(ai, value, ai.IOAddress);
-                await CreateTagChange(tagChange);
+                _context.TagChanges.Add(tagChange);
+                await _context.SaveChangesAsync();
                 return true;
             }
             return false;
@@ -259,9 +259,9 @@ public class TagRepository : ITagRepository
             if (ai != null)
             {
                 ai.CurrentValue = value;
-                await _context.SaveChangesAsync();
                 TagChange tagChange = new TagChange(ai, value, ai.IOAddress);
-                await CreateTagChange(tagChange);
+                _context.TagChanges.Add(tagChange);
+                await _context.SaveChangesAsync();
                 return true;
             }
 
