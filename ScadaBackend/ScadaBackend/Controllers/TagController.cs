@@ -193,6 +193,7 @@ namespace ScadaBackend.Controllers
 
                 bool updated = await _tagService.UpdateDigitalOutput(dto.Id, dto.Value);
 
+
                 return Ok(updated);
             }
 
@@ -211,6 +212,7 @@ namespace ScadaBackend.Controllers
                 }
 
                 bool updated = await _tagService.UpdateAnalogOutput(dto.Id, dto.Value);
+
 
                 return Ok(updated);
             }
