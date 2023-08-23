@@ -22,8 +22,8 @@ public interface ITagRepository
     Task<bool> SetScanForAnalogInput(AnalogInput analogInput, bool scan);
     Task<DigitalInput> GetDigitalInputById(Guid id);
     Task<AnalogInput> GetAnalogInputById(Guid id);
-    Task<DigitalInputDTO> CreateDigitalInput(DigitalInputDTO digitalInputDto);
-    Task<AnalogInputDTO> CreateAnalogInput(AnalogInputDTO analogInputDto);
+    Task<DigitalInput> CreateDigitalInput(DigitalInputDTO digitalInputDto);
+    Task<AnalogInput> CreateAnalogInput(AnalogInputDTO analogInputDto);
     Task<AnalogOutputDTO> CreateAnalogOutput(AnalogOutputDTO analogOutputDto);
     Task<DigitalOutputDTO> CreateDigitalOutput(DigitalOutputDTO digitalOutputDto);
     Task<bool> RemoveDigitalInput(Guid id);

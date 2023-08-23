@@ -69,9 +69,9 @@ public static class DbInitializer
         {
          
            new (id1, "Rezervoar 1", "Rezervoar za cokoladno mleko", 18, 3,
-               true, new List<Alarm>(), 5, 150, "L", "Driver1"),
+               true, new List<Alarm>(), 5, 150, "L", "Simulation", "C"),
            new (id2, "Rezervoar 3", "Rezervoar za sojino mleko", 30, 3,
-               true, new List<Alarm>(), 5, 150, "L", "Driver1")
+               true, new List<Alarm>(), 5, 150, "L", "Simulation", "S")
         };
 
         var alarm1 = new Alarm(new Guid(), 50, Alarm.AlarmType.HIGHER, Alarm.AlarmPriority.MEDIUM, id1, "L", false);
@@ -114,8 +114,8 @@ public static class DbInitializer
     {
         var digitalInputs = new DigitalInput[]
         {
-            new (Guid.NewGuid(), "Ventil 14", "Dovod tecnosti", 3, true, "driver1", 0),
-            new (Guid.NewGuid(), "Ventil 22", "Dovod tecnosti", 3, true, "driver1", 0),
+            new (Guid.NewGuid(), "Ventil 14", "Dovod tecnosti", 3, true, "Simulation", 0),
+            new (Guid.NewGuid(), "Ventil 22", "Dovod tecnosti", 3, true, "Simulation", 0),
          
         };
 

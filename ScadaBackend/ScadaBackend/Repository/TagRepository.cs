@@ -162,7 +162,7 @@ public class TagRepository : ITagRepository
         finally{DbSemaphore.Release();}
     }
 
-    public async Task<AnalogInputDTO> CreateAnalogInput(AnalogInputDTO analogInputDto)
+    public async Task<AnalogInput> CreateAnalogInput(AnalogInputDTO analogInputDto)
     {
         await DbSemaphore.WaitAsync();
         try
@@ -170,9 +170,8 @@ public class TagRepository : ITagRepository
             AnalogInput analogInput = new AnalogInput(analogInputDto);
             await _context.AddAsync(analogInput);
             await _context.SaveChangesAsync();
-            
-            
-            return analogInputDto;
+
+            return analogInput;
             
         }
         catch (Exception e)
@@ -183,7 +182,7 @@ public class TagRepository : ITagRepository
         finally{DbSemaphore.Release();}
     }
 
-    public async Task<DigitalInputDTO> CreateDigitalInput(DigitalInputDTO digitalInputDto)
+    public async Task<DigitalInput> CreateDigitalInput(DigitalInputDTO digitalInputDto)
     {
         await DbSemaphore.WaitAsync();
         try
@@ -192,7 +191,7 @@ public class TagRepository : ITagRepository
             await _context.AddAsync(digitalInput);
             await _context.SaveChangesAsync();
 
-            return digitalInputDto;
+            return digitalInput;
         }
         catch (Exception e)
         {

@@ -6,6 +6,7 @@ using ScadaBackend.Interfaces;
 using ScadaBackend.Models;
 using ScadaBackend.Repository;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace ScadaBackend.Services;
 
@@ -54,8 +55,18 @@ public class TagService : ITagService  {
     {
         while (true)
         {
-            float value = SimulationDriver.ReturnValue(digitalInput.IOAddress);
-            value = value > 1 ? 1 : 0;
+            float value;
+            if (digitalInput.Driver.Equals("RTU"))
+            {
+                Random rand = new Random();
+                value = rand.NextDouble() > 0.5 ? 1 : 0;
+            }
+            else
+            {
+                value = SimulationDriver.ReturnValue(digitalInput.IOAddress);
+                value = value > 1 ? 1 : 0;
+            }
+            
 
             if (Math.Abs(digitalInput.CurrentValue - value) > 0.001)
             {
@@ -85,13 +96,22 @@ public class TagService : ITagService  {
     {
         while (true)
         {
-            float value = SimulationDriver.ReturnValue(analogInput.IOAddress);
+            float value;
+            if(analogInput.Driver == "RTU")
+            {
+                Random rand = new Random();
+                value = (float)((rand.Next((int)analogInput.HighLimit) - int.Parse(analogInput.IOAddress)) * 0.99);
+            }
+            else
+            {
+                value = SimulationDriver.ReturnValue(analogInput.IOAddress);
+            }
             float currValue = analogInput.CurrentValue;
-            
             if (value > analogInput.HighLimit) value = analogInput.HighLimit;
             else if (value < analogInput.LowLimit) value = analogInput.LowLimit;
-            
-            
+
+
+
             if (Math.Abs(currValue - value) > 0.001)
             {
                 analogInput.CurrentValue = value;
@@ -109,8 +129,8 @@ public class TagService : ITagService  {
 
                     foreach(Alarm alarm in analogInput.Alarms)
                     {
-                        if((alarm.Type.Equals(Alarm.AlarmType.LOWER) && value <= alarm.ValueLimit) ||
-                            (alarm.Type.Equals(Alarm.AlarmType.HIGHER) && value >= alarm.ValueLimit))   
+                        if((alarm.Type.Equals(Alarm.AlarmType.LOWER) && value <= alarm.ValueLimit && currValue > alarm.ValueLimit) ||
+                            (alarm.Type.Equals(Alarm.AlarmType.HIGHER) && value >= alarm.ValueLimit && currValue < alarm.ValueLimit))
                         {
                             AlarmAlert alarmAlert = new(alarm);
                             await _alarmRepository.AddAlarmAlert(alarmAlert);
@@ -118,7 +138,6 @@ public class TagService : ITagService  {
                             await alarmHubContext.Clients.All.SendAsync("AlarmAlerted", serializedAlarmInput);
 
                             Console.WriteLine($"ALARM SET OFF!!!");
-
                         }
                     }
 
@@ -173,9 +192,10 @@ public class TagService : ITagService  {
         return await _tagRepository.RemoveAnalogOutput(id);
     }
 
-    public async Task<DigitalInputDTO> CreateDigitalInputTag(DigitalInputDTO dto)
+    public async Task<DigitalInput> CreateDigitalInputTag(DigitalInputDTO dto)
     {
-        return await _tagRepository.CreateDigitalInput(dto);
+        var di =  await _tagRepository.CreateDigitalInput(dto);
+        return di;
     }
 
     public async Task<DigitalOutputDTO> CreateDigitalOutputTag(DigitalOutputDTO dto)
@@ -183,9 +203,10 @@ public class TagService : ITagService  {
         return await _tagRepository.CreateDigitalOutput(dto);
     }
 
-    public async Task<AnalogInputDTO> CreateAnalogInputTag(AnalogInputDTO dto)
+    public async Task<AnalogInput> CreateAnalogInputTag(AnalogInputDTO dto)
     {
-        return await _tagRepository.CreateAnalogInput(dto);
+        var ai = await _tagRepository.CreateAnalogInput(dto);
+        return ai;
     }
 
     public async Task<AnalogOutputDTO> CreateAnalogOutputTag(AnalogOutputDTO dto)
