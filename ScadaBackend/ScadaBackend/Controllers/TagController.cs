@@ -193,7 +193,6 @@ namespace ScadaBackend.Controllers
 
                 bool updated = await _tagService.UpdateDigitalOutput(dto.Id, dto.Value);
 
-
                 return Ok(updated);
             }
 
