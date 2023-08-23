@@ -31,6 +31,17 @@ public abstract class Tag
 
     }
 
+    public Tag(Guid id, string tagName, string description, float currentValue, string ioAddress, bool isDeleted = false )
+    {
+        ID = id;
+        TagName = tagName;
+        Description = description;
+        IOAddress = ioAddress;
+        IsDeleted = isDeleted;
+        CurrentValue = currentValue;
+
+    }
+
     public string GetIOAddress()
     {
         Random random = new Random();

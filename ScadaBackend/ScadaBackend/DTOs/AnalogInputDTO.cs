@@ -10,8 +10,11 @@ public class AnalogInputDTO
     public float HighLimit { get; set; }
     public string Units { get; set; }
     public float ScanTime { get; set; }
+    public string Driver { get; set; }
+    public string IOAddress { get; set; }
 
-    public AnalogInputDTO(Guid id, string name, string description, float currentValue, float lowLimit, float highLimit, string units, float scanTime)
+    public AnalogInputDTO(Guid id, string name, string description, float currentValue, float lowLimit,
+        float highLimit, string units, float scanTime, string driver, string ioAddress)
     {
         Id = id;    
         Name = name;
@@ -21,5 +24,7 @@ public class AnalogInputDTO
         HighLimit = highLimit;
         Units = units;
         ScanTime = scanTime;
+        Driver = driver;
+        IOAddress = ioAddress;
     }
 }

@@ -22,11 +22,12 @@ public class DigitalInput : Tag
         Driver = driver; 
     }
 
-    public DigitalInput(DigitalInputDTO digitalInputDto) : base(digitalInputDto.Id, digitalInputDto.Name, digitalInputDto.Description, digitalInputDto.CurrentValue)
+    public DigitalInput(DigitalInputDTO digitalInputDto) :
+        base(digitalInputDto.Id, digitalInputDto.Name, digitalInputDto.Description, digitalInputDto.CurrentValue, digitalInputDto.IOAddress)
     {
         ScanTime = digitalInputDto.ScanTime;
         OnOffScan = false;
-        Driver = "Driver1";
+        Driver = digitalInputDto.Driver;
     }
 
 

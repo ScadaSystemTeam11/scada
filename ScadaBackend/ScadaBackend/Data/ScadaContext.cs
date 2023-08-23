@@ -3,9 +3,9 @@ using ScadaBackend.Models;
 
 namespace ScadaBackend.Data;
 
-public class AppContext : DbContext
+public class ScadaContext : DbContext
 {
-    public AppContext(DbContextOptions<AppContext> options) : base(options) {}
+    public ScadaContext(DbContextOptions<ScadaContext> options) : base(options) {}
     public DbSet<DigitalOutput> DigitalOutputs { get; set; }
     public DbSet<DigitalInput> DigitalInputs { get; set; }
     public DbSet<AnalogOutput> AnalogOutputs { get; set; }

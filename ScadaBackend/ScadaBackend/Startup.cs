@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using ScadaBackend.Interfaces;
 using ScadaBackend.Repository;
 using ScadaBackend.Services;
-using AppContext = ScadaBackend.Data.AppContext;
 
 namespace ScadaBackend;
 
@@ -38,13 +37,13 @@ public class Startup
         
         
         
-        services.AddDbContext<AppContext>(options =>
+        services.AddDbContext<ScadaContext>(options =>
             options.UseNpgsql(connectionString), ServiceLifetime.Singleton);
 
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITagRepository, TagRepository>();
-        services.AddScoped<IAlarmRepository, AlarmRepository>(); // Add this line
+        services.AddScoped<IAlarmRepository, AlarmRepository>(); 
         services.AddScoped<IAlarmService, AlarmService>();
         services.AddScoped<ITagService, TagService>();
         services.AddScoped<IReportService, ReportService>();

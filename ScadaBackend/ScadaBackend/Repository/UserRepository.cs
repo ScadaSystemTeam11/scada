@@ -2,14 +2,13 @@ using Microsoft.IdentityModel.Tokens;
 using ScadaBackend.Interfaces;
 using ScadaBackend.Models;
 using ScadaBackend.Data;
-using AppContext = ScadaBackend.Data.AppContext;
 
 namespace ScadaBackend.Repository;
 
 public class UserRepository : IUserRepository
 {
-    private readonly AppContext _context;
-    public UserRepository(AppContext context) {
+    private readonly ScadaContext _context;
+    public UserRepository(ScadaContext context) {
         _context = context;
     }
     
