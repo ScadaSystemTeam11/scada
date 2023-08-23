@@ -52,5 +52,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapHub<TagChangeHub>("/tagChangeHub");
+app.MapHub<AlarmAlertedHub>("/alarmAlertedHub");
 
 app.Run();

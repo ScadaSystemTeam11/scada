@@ -1,5 +1,6 @@
 using System.Buffers.Text;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using ScadaBackend.DTOs;
 using ScadaBackend.Interfaces;
 using ScadaBackend.Models;
@@ -36,7 +37,6 @@ namespace ScadaBackend.Controllers
         [HttpPost("CreateDigitalOutputTag")]
         public async Task<IActionResult> CreateDigitalOutputTag([FromBody] DigitalOutputDTO dto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
             if (dto.InitialValue < 0) return BadRequest("Invalid value of tag");
             var tag = await _tagService.CreateDigitalOutputTag(dto);
             return Ok(tag);
@@ -72,9 +72,11 @@ namespace ScadaBackend.Controllers
         [HttpDelete("DeleteDigitalInputTag")]
         public async Task<IActionResult> DeleteDigitalInputTag([FromQuery] Guid id)
         {
+            Console.WriteLine("Ulazimo ovde");
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var deleted = _tagService.DeleteDigitalInputTag(id);
-            return Ok(deleted);
+            Console.WriteLine("This tag has been deleted");
+            return Ok("Deleted Tag succesfully");
         }
 
         [HttpDelete("DeleteAnalogInputTag")]
@@ -82,7 +84,7 @@ namespace ScadaBackend.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var deleted = _tagService.DeleteAnalogInputTag(id);
-            return Ok(deleted);
+            return Ok("Deleted Tag succesfully");
         }
 
         [HttpDelete("DeleteDigitalOutputTag")]
@@ -90,7 +92,7 @@ namespace ScadaBackend.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var deleted = _tagService.DeleteDigitalOutputTag(id);
-            return Ok(deleted);
+            return Ok("Deleted Tag succesfully");
         }
 
         [HttpDelete("DeleteAnalogOutputTag")]
@@ -98,7 +100,7 @@ namespace ScadaBackend.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var deleted = _tagService.DeleteAnalogOutputTag(id);
-            return Ok(deleted);
+            return Ok("Deleted Tag succesfully");
         }
 
 
@@ -188,7 +190,9 @@ namespace ScadaBackend.Controllers
                 var di = await _tagService.GetDigitalOutputById(dto.Id);
                 if (di == null)
                     return BadRequest("Tag with that Id does not exist");
-                bool updated = await _tagService.UpdateDigitalOutput(di.ID, dto.Value);
+                di.CurrentValue = dto.Value;
+                bool updated = await _tagService.UpdateDigitalOutput(di);
+
                 return Ok(updated);
             }
 
@@ -205,8 +209,8 @@ namespace ScadaBackend.Controllers
                 {
                     return BadRequest("Value of tag is lower than limit");
                 }
-
-                bool updated = await _tagService.UpdateAnalogOutput(dto.Id, dto.Value);
+                analogOutput.CurrentValue = dto.Value;
+                bool updated = await _tagService.UpdateAnalogOutput(analogOutput);
                 return Ok(updated);
             }
 
@@ -228,6 +232,23 @@ namespace ScadaBackend.Controllers
                 return StatusCode(500, "An error occurred while fetching active inputs.");
             }
         }
+
+
+        [HttpGet("AllTags")]
+        public async Task<IActionResult> GetAllTags()
+        {
+            try
+            {
+                var allTags = await _tagService.GetAllTags();
+
+                return Ok(allTags);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "An error occurred while fetching tags.");
+            }
+        }
+
     }
 
 }

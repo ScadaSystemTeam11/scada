@@ -419,7 +419,112 @@ public class TagRepository : ITagRepository
         {
             DbSemaphore.Release();
         }
+
+
     }
+
+    public async Task<List<AnalogInputLastValueDTO>> GetLastValuesOfAITags()
+    {
+        await DbSemaphore.WaitAsync();
+        try
+        {
+            var analogInputTags = await _context.AnalogInputs.ToListAsync();
+            var analogInputLastValues = new List<AnalogInputLastValueDTO>();
+
+            foreach (var analogInput in analogInputTags)
+            {
+                var latestTagChange = await _context.TagChanges
+                    .Where(tc => tc.TagId == analogInput.ID)
+                    .OrderByDescending(tc => tc.Timestamp)
+                    .FirstOrDefaultAsync();
+
+                if (latestTagChange != null)
+                {
+                    analogInputLastValues.Add(new AnalogInputLastValueDTO
+                    {
+                        AnalogInput = analogInput,
+                        LastTagChange = latestTagChange
+                    });
+                }
+            }
+
+            return analogInputLastValues;
+        }
+        finally
+        {
+            DbSemaphore.Release();
+        }
+    }
+
+    public async Task<List<DigitalInputLastValueDTO>> GetLastValuesOfDITags()
+    {
+        await DbSemaphore.WaitAsync();
+        try
+        {
+            var digitalInputTags = await _context.DigitalInputs.ToListAsync();
+            var digitalInputLastValues = new List<DigitalInputLastValueDTO>();
+
+            foreach (var digitalInput in digitalInputTags)
+            {
+                var latestTagChange = await _context.TagChanges
+                    .Where(tc => tc.TagId == digitalInput.ID)
+                    .OrderByDescending(tc => tc.Timestamp)
+                    .FirstOrDefaultAsync();
+
+                if (latestTagChange != null)
+                {
+                    digitalInputLastValues.Add(new DigitalInputLastValueDTO
+                    {
+                        DigitalInput = digitalInput,
+                        LastTagChange = latestTagChange
+                    });
+                }
+            }
+
+            return digitalInputLastValues;
+        }
+        finally
+        {
+            DbSemaphore.Release();
+        }
+    }
+
+    public async Task<List<TagChange>> GetTagsInTimePeriod(DateTime start, DateTime end)
+    {
+        await DbSemaphore.WaitAsync();
+        try
+        {
+            var tagChangesInTimePeriod = await _context.TagChanges
+                .Where(tc => tc.Timestamp >= start && tc.Timestamp <= end)
+                .OrderByDescending(tc => tc.Timestamp)
+                .ToListAsync();
+
+            return tagChangesInTimePeriod;
+        }
+        finally
+        {
+            DbSemaphore.Release();
+        }
+    }
+
+    public async Task<List<TagChange>> GetTagValuesById(Guid id)
+    {
+        await DbSemaphore.WaitAsync();
+        try
+        {
+            var tagChangesForTag = await _context.TagChanges
+                .Where(tc => tc.TagId == id)
+                .OrderByDescending(tc => tc.Timestamp)
+                .ToListAsync();
+
+            return tagChangesForTag;
+        }
+        finally
+        {
+            DbSemaphore.Release();
+        }
+    }
+
 
 
 

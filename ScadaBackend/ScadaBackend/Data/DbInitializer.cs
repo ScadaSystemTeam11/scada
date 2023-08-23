@@ -64,19 +64,32 @@ public static class DbInitializer
     
     private static void AddAnalogInputs(AppContext context)
     {
+        Guid id1 = Guid.NewGuid();
+        Guid id2 = Guid.NewGuid();
+
         var analogInputs = new AnalogInput[]
         {
-           new (Guid.NewGuid(), "Rezervoar 1", "Rezervoar za cokoladno mleko", 18, 3,
+         
+           new (id1, "Rezervoar 1", "Rezervoar za cokoladno mleko", 18, 3,
                true, new List<Alarm>(), 5, 150, "L", "Driver1"),
-           new (Guid.NewGuid(), "Rezervoar 3", "Rezervoar za sojino mleko", 30, 3,
+           new (id2, "Rezervoar 3", "Rezervoar za sojino mleko", 30, 3,
                true, new List<Alarm>(), 5, 150, "L", "Driver1")
-
         };
 
+        var alarm1 = new Alarm(new Guid(), 50, Alarm.AlarmType.HIGHER, Alarm.AlarmPriority.MEDIUM, id1, "L", false);
+        var alarm2 = new Alarm(new Guid(), 20, Alarm.AlarmType.LOWER, Alarm.AlarmPriority.HIGH, id1, "L", false);
+        var alarm3= new Alarm(new Guid(), 40, Alarm.AlarmType.LOWER, Alarm.AlarmPriority.LOW, id2, "L", false);
+        analogInputs[0].Alarms.Add(alarm1);
+        analogInputs[0].Alarms.Add(alarm2);
+        analogInputs[1].Alarms.Add(alarm3);
+     
         foreach (AnalogInput d in analogInputs)
         {
             context.AnalogInputs.Add(d);
         }
+        context.Alarms.Add(alarm1);
+        context.Alarms.Add(alarm2);
+        context.Alarms.Add(alarm3);
         context.SaveChanges();
     }
     

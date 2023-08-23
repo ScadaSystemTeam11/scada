@@ -12,10 +12,12 @@ namespace ScadaBackend.Services;
 public class TagService : ITagService  {
     
     private readonly ITagRepository _tagRepository;
+    private readonly IAlarmRepository _alarmRepository;
 
-    public TagService(ITagRepository tagRepository)
+    public TagService(ITagRepository tagRepository, IAlarmRepository alarmRepository)
     {
         _tagRepository = tagRepository;
+        _alarmRepository = alarmRepository; 
     }
     
     public async Task<List<DigitalInput>> GetDigitalInputTags()
@@ -28,7 +30,7 @@ public class TagService : ITagService  {
     {
         return await _tagRepository.GetAnalogInputTags();
     }
-    public async Task StartSimulationAsync(IHubContext<TagChangeHub> hubContext)
+    public async Task StartSimulationAsync(IHubContext<TagChangeHub> hubContext, IHubContext<AlarmAlertedHub> alarmHubContext)
     {
         var analogInputs = await _tagRepository.GetAnalogInputTags();
         var digitalInputs = await _tagRepository.GetDigitalInputTags();
@@ -42,7 +44,7 @@ public class TagService : ITagService  {
 
         foreach (var analogInput in analogInputs)
         {
-            tasks.Add(Task.Run(() => SimulateAnalogInput(analogInput, hubContext)));
+            tasks.Add(Task.Run(() => SimulateAnalogInput(analogInput, hubContext, alarmHubContext)));
         }
 
         await Task.WhenAll(tasks);
@@ -69,6 +71,8 @@ public class TagService : ITagService  {
                     string serializedInput = JsonConvert.SerializeObject(digitalInput);
                     await hubContext.Clients.All.SendAsync("TagValueChanged", serializedInput);
 
+                    Console.WriteLine($"Sent TagValueChanged event for Digital Input {digitalInput.ID}");
+
                 }
             }
             else { continue;}
@@ -77,7 +81,7 @@ public class TagService : ITagService  {
         }
     }
 
-    private async Task SimulateAnalogInput(AnalogInput analogInput,  IHubContext<TagChangeHub> hubContext)
+    private async Task SimulateAnalogInput(AnalogInput analogInput,  IHubContext<TagChangeHub> hubContext, IHubContext<AlarmAlertedHub> alarmHubContext)
     {
         while (true)
         {
@@ -102,6 +106,21 @@ public class TagService : ITagService  {
                     await hubContext.Clients.All.SendAsync("TagValueChanged", serializedInput);
 
              
+
+                    foreach(Alarm alarm in analogInput.Alarms)
+                    {
+                        if((alarm.Type.Equals(Alarm.AlarmType.LOWER) && value <= alarm.ValueLimit) ||
+                            (alarm.Type.Equals(Alarm.AlarmType.HIGHER) && value >= alarm.ValueLimit))   
+                        {
+                            AlarmAlert alarmAlert = new(alarm);
+                            await _alarmRepository.AddAlarmAlert(alarmAlert);
+                            string serializedAlarmInput = JsonConvert.SerializeObject(alarmAlert);
+                            await alarmHubContext.Clients.All.SendAsync("AlarmAlerted", serializedAlarmInput);
+
+                            Console.WriteLine($"ALARM SET OFF!!!");
+
+                        }
+                    }
 
                 }
             }
@@ -199,4 +218,23 @@ public class TagService : ITagService  {
 
         return await _tagRepository.GetActiveInputTags();
     }
+
+    public async Task<List<Tag>> GetAllTags()
+    {
+        List<Tag> allTags = new List<Tag>();
+
+        List<AnalogOutput> analogOutputs = await _tagRepository.GetAnalogOutputs();
+        List<DigitalOutput> digitalOutputs = await _tagRepository.GetDigitalOutputs();
+        List<DigitalInput> digitalInputTags = await _tagRepository.GetDigitalInputTags();
+        List<AnalogInput> analogInputTags = await _tagRepository.GetAnalogInputTags();
+
+        allTags.AddRange(analogOutputs);
+        allTags.AddRange(digitalOutputs);
+        allTags.AddRange(digitalInputTags);
+        allTags.AddRange(analogInputTags);
+
+        return allTags;
+    }
+
+
 }

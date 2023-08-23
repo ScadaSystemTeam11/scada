@@ -32,4 +32,11 @@ public interface ITagRepository
     Task<bool> RemoveAnalogOutput(Guid id);
 
     Task<List<Tag>> GetActiveInputTags();
+    Task<List<AnalogInputLastValueDTO>> GetLastValuesOfAITags();
+    Task<List<DigitalInputLastValueDTO>> GetLastValuesOfDITags();
+
+    Task<List<TagChange>> GetTagsInTimePeriod(DateTime start, DateTime end);
+
+    Task<List<TagChange>> GetTagValuesById(Guid id);
+
 }

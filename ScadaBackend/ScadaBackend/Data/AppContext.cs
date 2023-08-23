@@ -11,6 +11,7 @@ public class AppContext : DbContext
     public DbSet<AnalogOutput> AnalogOutputs { get; set; }
     public DbSet<AnalogInput> AnalogInputs { get; set; }
     public DbSet<Alarm>  Alarms { get; set; }
+    public DbSet<AlarmAlert> AlarmAlerts { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<TagChange> TagChanges { get; set; }
 
@@ -22,6 +23,7 @@ public class AppContext : DbContext
         modelBuilder.Entity<DigitalInput>().ToTable("DigitalInput");
         modelBuilder.Entity<AnalogInput>().ToTable("AnalogInput");
         modelBuilder.Entity<Alarm>().ToTable("Alarms");
+        modelBuilder.Entity<AlarmAlert>().ToTable("AlarmAlerts");
         modelBuilder.Entity<TagChange>().ToTable("TagChange");
 
     }

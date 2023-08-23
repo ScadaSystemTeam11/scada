@@ -7,7 +7,7 @@ namespace ScadaBackend.Interfaces;
 
 public interface ITagService
 {
-     Task StartSimulationAsync(IHubContext<TagChangeHub> hubContext);
+     Task StartSimulationAsync(IHubContext<TagChangeHub> hubContext, IHubContext<AlarmAlertedHub> alarmHubContext);
      Task<bool> SetScan(Guid id, string type, bool isOn);
      Task<List<DigitalInput>> GetDigitalInputTags();
      Task<List<AnalogInput>> GetAnalogInputTags();
@@ -30,6 +30,7 @@ public interface ITagService
      Task<bool> DeleteAnalogInputTag(Guid id);
      Task<bool> DeleteAnalogOutputTag(Guid id);
 
-    Task<List<Tag>> GetActiveInputTags();
+     Task<List<Tag>> GetActiveInputTags();
+     Task<List<Tag>> GetAllTags();
 
 }
