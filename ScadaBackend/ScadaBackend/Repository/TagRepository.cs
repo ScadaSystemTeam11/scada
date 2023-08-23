@@ -207,7 +207,6 @@ public class TagRepository : ITagRepository
             if (ai != null)
             {
                 ai.CurrentValue = analogInput.CurrentValue;
-                Console.WriteLine(ai);
                 await _context.SaveChangesAsync();
             }
         }
@@ -221,17 +220,19 @@ public class TagRepository : ITagRepository
         }
     }
 
-    public async Task<bool> UpdateAnalogOutput(AnalogOutput analogOutput)
+    public async Task<bool> UpdateAnalogOutput( Guid id, int value)
     {
         await DbSemaphore.WaitAsync();
         try
         {
 
-            var ai = await _context.AnalogOutputs.FindAsync(analogOutput.ID);
+            var ai = await _context.AnalogOutputs.FindAsync(id);
             if (ai != null)
             {
-                ai.CurrentValue = analogOutput.CurrentValue;
+                ai.CurrentValue = value;
                 await _context.SaveChangesAsync();
+                TagChange tagChange = new TagChange(ai, value, ai.IOAddress);
+                await CreateTagChange(tagChange);
                 return true;
             }
             return false;
@@ -248,17 +249,19 @@ public class TagRepository : ITagRepository
         }
     }
 
-    public async Task<bool> UpdateDigitalOutput(DigitalOutput digitalOutput)
+    public async Task<bool> UpdateDigitalOutput(Guid id, int value)
     {
         await DbSemaphore.WaitAsync();
         try
         {
 
-            var ai = await _context.DigitalOutputs.FindAsync(digitalOutput.ID);
+            var ai = await _context.DigitalOutputs.FindAsync(id);
             if (ai != null)
             {
-                ai.CurrentValue = digitalOutput.CurrentValue;
+                ai.CurrentValue = value;
                 await _context.SaveChangesAsync();
+                TagChange tagChange = new TagChange(ai, value, ai.IOAddress);
+                await CreateTagChange(tagChange);
                 return true;
             }
 
