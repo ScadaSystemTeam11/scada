@@ -21,8 +21,8 @@ public interface ITagService
      Task<AnalogOutputDTO> CreateAnalogOutputTag(AnalogOutputDTO dto);
      Task<AnalogOutput> GetAnalogOutputById(Guid id);
      Task<DigitalOutput> GetDigitalOutputById(Guid id);
-     Task<bool> UpdateAnalogOutput(AnalogOutput analogOutput);
-     Task<bool> UpdateDigitalOutput(DigitalOutput digitalOutput);
+     Task<bool> UpdateAnalogOutput(Guid id, int value);
+     Task<bool> UpdateDigitalOutput(Guid id, int value);
 
 
      Task<bool> DeleteDigitalInputTag(Guid id);

@@ -72,7 +72,7 @@ public class TagService : ITagService  {
             {
                 digitalInput.CurrentValue = value;
                 await _tagRepository.UpdateDigitalInput(digitalInput);
-                Console.WriteLine($"Digital Input {digitalInput.ID} value changed: {value}");
+             
 
                 if (digitalInput.OnOffScan)
                 {
@@ -85,7 +85,8 @@ public class TagService : ITagService  {
                     Console.WriteLine($"Sent TagValueChanged event for Digital Input {digitalInput.ID}");
 
                 }
-            } else { continue;}
+            }
+            else { continue;}
             
             await Task.Delay(TimeSpan.FromSeconds(digitalInput.ScanTime));
         }
@@ -115,7 +116,7 @@ public class TagService : ITagService  {
             {
                 analogInput.CurrentValue = value;
                 await _tagRepository.UpdateAnalogInput(analogInput);
-                Console.WriteLine($"Analog Input {analogInput.ID} value changed: {value}");
+
                 if (analogInput.OnOffScan)
                 {
                     TagChange tagChange = new TagChange(analogInput, value, analogInput.IOAddress);
@@ -124,7 +125,7 @@ public class TagService : ITagService  {
                     string serializedInput = JsonConvert.SerializeObject(analogInput);
                     await hubContext.Clients.All.SendAsync("TagValueChanged", serializedInput);
 
-                    Console.WriteLine($"Sent TagValueChanged event for Analog Input {analogInput.ID}");
+             
 
                     foreach(Alarm alarm in analogInput.Alarms)
                     {
@@ -155,11 +156,10 @@ public class TagService : ITagService  {
             DigitalInput  di = await _tagRepository.GetDigitalInputById(id);
             return await _tagRepository.SetScanForDigitalInput(di, isOn);
         }
-        else
-        {
-            AnalogInput ai = await _tagRepository.GetAnalogInputById(id);
-            return await _tagRepository.SetScanForAnalogInput(ai, isOn);
-        }
+      
+        AnalogInput ai = await _tagRepository.GetAnalogInputById(id);
+        return await _tagRepository.SetScanForAnalogInput(ai, isOn);
+        
     }
 
     public async Task<AnalogOutput> GetAnalogOutputById(Guid id)
@@ -214,14 +214,14 @@ public class TagService : ITagService  {
         return await _tagRepository.CreateAnalogOutput(dto);
     }
 
-    public async Task<bool> UpdateAnalogOutput(AnalogOutput analogOutput)
+    public async Task<bool> UpdateAnalogOutput(Guid id, int value)
     {
-        return await _tagRepository.UpdateAnalogOutput(analogOutput);
+        return await _tagRepository.UpdateAnalogOutput(id,  value);
     }
 
-    public async Task<bool> UpdateDigitalOutput(DigitalOutput digitalOutput)
+    public async Task<bool> UpdateDigitalOutput(Guid id, int value)
     {
-        return await _tagRepository.UpdateDigitalOutput(digitalOutput);
+        return await _tagRepository.UpdateDigitalOutput(id, value);
     }
 
     public async Task<List<AnalogOutput>> GetAnalogOutputs()

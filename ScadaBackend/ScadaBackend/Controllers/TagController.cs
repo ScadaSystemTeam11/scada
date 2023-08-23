@@ -192,6 +192,7 @@ namespace ScadaBackend.Controllers
                     return BadRequest("Tag with that Id does not exist");
                 di.CurrentValue = dto.Value;
                 bool updated = await _tagService.UpdateDigitalOutput(di);
+
                 return Ok(updated);
             }
 
