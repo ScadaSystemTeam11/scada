@@ -15,9 +15,9 @@ public interface ITagService
      Task<List<DigitalOutput>> GetDigitalOutputs();
 
 
-     Task<DigitalInputDTO> CreateDigitalInputTag(DigitalInputDTO dto);
+     Task<DigitalInput> CreateDigitalInputTag(DigitalInputDTO dto);
      Task<DigitalOutputDTO> CreateDigitalOutputTag(DigitalOutputDTO dto);
-     Task<AnalogInputDTO> CreateAnalogInputTag(AnalogInputDTO dto);
+     Task<AnalogInput> CreateAnalogInputTag(AnalogInputDTO dto);
      Task<AnalogOutputDTO> CreateAnalogOutputTag(AnalogOutputDTO dto);
      Task<AnalogOutput> GetAnalogOutputById(Guid id);
      Task<DigitalOutput> GetDigitalOutputById(Guid id);
