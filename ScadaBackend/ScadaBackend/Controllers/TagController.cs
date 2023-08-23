@@ -27,7 +27,7 @@ namespace ScadaBackend.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (dto.CurrentValue <= 1 && dto.CurrentValue >= 0)
+            if (dto.CurrentValue != 1 && dto.CurrentValue != 0)
                 return BadRequest("Invalid tag value");
             if (dto.ScanTime < 0) return BadRequest("Invalid scan time");
             var tag = await _tagService.CreateDigitalInputTag(dto);
@@ -191,7 +191,7 @@ namespace ScadaBackend.Controllers
                 if (di == null)
                     return BadRequest("Tag with that Id does not exist");
                 di.CurrentValue = dto.Value;
-                bool updated = await _tagService.UpdateDigitalOutput(di);
+                bool updated = await _tagService.UpdateDigitalOutput(di.ID, dto.Value);
 
                 return Ok(updated);
             }
@@ -210,7 +210,7 @@ namespace ScadaBackend.Controllers
                     return BadRequest("Value of tag is lower than limit");
                 }
                 analogOutput.CurrentValue = dto.Value;
-                bool updated = await _tagService.UpdateAnalogOutput(analogOutput);
+                bool updated = await _tagService.UpdateAnalogOutput(analogOutput.ID, dto.Value);
                 return Ok(updated);
             }
 
