@@ -1,0 +1,22 @@
+namespace ScadaBackend.DTOs;
+
+public class DigitalInputDTO
+{
+
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public float ScanTime { get; set; }
+    public float CurrentValue { get; set; }
+
+    public DigitalInputDTO(Guid id, string name, string description, float scanTime, float currentValue)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+        ScanTime = scanTime;
+        CurrentValue = currentValue;
+    }
+    
+    public DigitalInputDTO() {}
+}

@@ -1,9 +1,13 @@
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
+
 namespace ScadaBackend.Models;
 
 public abstract class Tag
 {
     #region Properties
-    public int id { get; set; }
+    [Key]
+    public Guid ID { get; set; }
     public string TagName { get; set; }
     public string Description { get; set; }
     public string IOAddress { get; set; }
@@ -16,9 +20,9 @@ public abstract class Tag
         IsDeleted = false;
     }
 
-    public Tag(int id, string tagName, string description, float currentValue, bool isDeleted=false )
+    public Tag(Guid id, string tagName, string description, float currentValue, bool isDeleted=false )
     {
-        this.id = id; 
+        ID = id;
         TagName = tagName;
         Description = description;
         IOAddress = GetIOAddress();
@@ -35,5 +39,9 @@ public abstract class Tag
         return randomValue;
     }
 
+    public override string ToString()
+    {
+        return $"ID : {ID}\nTagName : {TagName}\nCurrentValue: {CurrentValue}";
+    }
 
 }
