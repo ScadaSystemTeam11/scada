@@ -1,16 +1,18 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using ScadaBackend.Data;
 using ScadaBackend.DTOs;
+using ScadaBackend.Hub;
 using ScadaBackend.Models;
-using AppContext = ScadaBackend.Data.AppContext;
 
 namespace ScadaBackend.Repository;
 
 public class TagRepository : ITagRepository
 {
-    private readonly AppContext _context;
+    private readonly ScadaContext _context;
 
-    public TagRepository(AppContext context)
+    public TagRepository(ScadaContext context)
     {
         _context = context;
     }
@@ -168,6 +170,8 @@ public class TagRepository : ITagRepository
             AnalogInput analogInput = new AnalogInput(analogInputDto);
             await _context.AddAsync(analogInput);
             await _context.SaveChangesAsync();
+            
+            
             return analogInputDto;
             
         }

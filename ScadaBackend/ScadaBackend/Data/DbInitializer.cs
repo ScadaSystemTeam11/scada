@@ -4,11 +4,9 @@ namespace ScadaBackend.Data;
 
 public static class DbInitializer
 {
-    public static void Initialize(AppContext context)
+    public static void Initialize(ScadaContext context)
     {
-        context.Database.EnsureDeleted(); // Ovo će obrisati celu bazu ako postoji.
-        context.Database.EnsureCreated();
-
+        
         if (!context.Users.Any())
         {
             AddUsers(context);
@@ -33,7 +31,7 @@ public static class DbInitializer
      
     }
 
-    private static void AddUsers(AppContext context)
+    private static void AddUsers(ScadaContext context)
     {
         var users = new User[]
         {
@@ -45,7 +43,7 @@ public static class DbInitializer
         }
     }
     
-    private static void AddAnalogOutputs(AppContext context)
+    private static void AddAnalogOutputs(ScadaContext context)
     {
         var analogOutputs = new AnalogOutput[]
         {
@@ -62,7 +60,7 @@ public static class DbInitializer
         context.SaveChanges();
     }
     
-    private static void AddAnalogInputs(AppContext context)
+    private static void AddAnalogInputs(ScadaContext context)
     {
         Guid id1 = Guid.NewGuid();
         Guid id2 = Guid.NewGuid();
@@ -94,7 +92,7 @@ public static class DbInitializer
     }
     
     
-    private static void AddDigitalOutputs(AppContext context)
+    private static void AddDigitalOutputs(ScadaContext context)
     {
         var digitalOutputs = new DigitalOutput[]
         {
@@ -112,7 +110,7 @@ public static class DbInitializer
         context.SaveChanges();
     }
 
-    private static void AddDigitalInputs(AppContext context)
+    private static void AddDigitalInputs(ScadaContext context)
     {
         var digitalInputs = new DigitalInput[]
         {

@@ -3,16 +3,15 @@ using ScadaBackend.Data;
 using ScadaBackend.DTOs;
 using ScadaBackend.Interfaces;
 using ScadaBackend.Models;
-using AppContext = ScadaBackend.Data.AppContext;
 
 
 namespace ScadaBackend.Repository
 {
     public class AlarmRepository : IAlarmRepository
     {
-        private readonly AppContext _context;
+        private readonly ScadaContext _context;
 
-        public AlarmRepository(AppContext context)
+        public AlarmRepository(ScadaContext context)
         {
             _context = context;
         }

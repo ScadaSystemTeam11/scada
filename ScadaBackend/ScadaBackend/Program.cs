@@ -1,7 +1,6 @@
 using ScadaBackend;
 using ScadaBackend.Data;
 using ScadaBackend.Hub;
-using AppContext = ScadaBackend.Data.AppContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,18 +10,21 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
+if (args.Length == 1 && args[0].ToLower() == "initialize")
 {
-    var services = scope.ServiceProvider;
-    try
+    using (var scope = app.Services.CreateScope())
     {
-        var context = services.GetRequiredService<AppContext>();
-        DbInitializer.Initialize(context);
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred creating the DB.");
+        var services = scope.ServiceProvider;
+        try
+        {
+            var context = services.GetRequiredService<ScadaContext>();
+            DbInitializer.Initialize(context);
+        }
+        catch (Exception ex)
+        {
+            var logger = services.GetRequiredService<ILogger<Program>>();
+            logger.LogError(ex, "An error occurred creating the DB.");
+        }
     }
 }
 
